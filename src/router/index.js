@@ -29,6 +29,11 @@ Vue.use(VueRouter)
     path: '/konva',
     name: 'konva',
     component: () => import(/* webpackChunkName: "about" */ '../views/konva.vue')
+  },
+  {
+    path: '/buttons',
+    name: 'buttons',
+    component: () => import(/* webpackChunkName: "about" */ '../views/pages/buttons.vue')
   }
 ]
 
