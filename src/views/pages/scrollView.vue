@@ -1,12 +1,19 @@
 <template>
   <v-stage :config="configKonva">
        <v-layer ref="layer">
-           <linear-layout>
-                 <kButton type="info" :mgl="10" text="1"></kButton>
+        <scroll-view :height="$sizeW(44)">
+            <linear-layout :width="$sizeW(667)">
+                    <kButton type="info" :mgl="10" text="1"></kButton>
                     <kButton type="info" :mgl="10" text="2"></kButton>
                     <kButton type="info" :mgl="10" text="3"></kButton>
-           </linear-layout>
-           
+                    <kButton type="info" :mgl="10" text="4"></kButton>
+                    <kButton type="info" :mgl="10" text="5"></kButton>
+                    <kButton type="info" :mgl="10" text="6"></kButton>
+                    <kButton type="info" :mgl="10" text="7"></kButton>
+                    <kButton type="info" :mgl="10" text="8"></kButton>
+                    <kButton type="info" :mgl="10" text="9"></kButton>
+            </linear-layout>
+        </scroll-view>
        </v-layer>
   </v-stage>
 </template>

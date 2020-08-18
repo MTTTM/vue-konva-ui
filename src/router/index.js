@@ -34,6 +34,11 @@ Vue.use(VueRouter)
     path: '/buttons',
     name: 'buttons',
     component: () => import(/* webpackChunkName: "about" */ '../views/pages/buttons.vue')
+  },
+  {
+    path: '/scrollView',
+    name: 'scrollView',
+    component: () => import(/* webpackChunkName: "about" */ '../views/pages/scrollView.vue')
   }
 ]
 

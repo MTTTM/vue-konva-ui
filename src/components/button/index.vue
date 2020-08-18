@@ -29,14 +29,18 @@ export default {
         return 0;
       },
     },
+    text:{
+        required:true,
+        type:[String,Number]
+    }
   },
   data() {
     return {
       defaultConfig: {
         x: 0,
         y: 0,
-        width: 100,
-        height: 44,
+        width: this.$sizeW(100),
+        height: this.$sizeW(44),
         fill: "#07c160",
         shadowBlur: 10,
       },
@@ -45,8 +49,8 @@ export default {
         text: "1",
         fontSize: 15,
         color: "#fff",
-        height:44,
-        width:100,
+        height:this.$sizeW(44),
+        width:this.$sizeW(100),
         align: 'center',
         verticalAlign:"middle",
         fill: 'green',
@@ -81,7 +85,8 @@ export default {
       //更新字体样式
       this.textConfig = Object.assign({},this.textConfig,{
         x: obj.x,
-        height:obj.height
+        height:obj.height,
+        text:this.text
       });
 
       return obj;
@@ -90,6 +95,7 @@ export default {
       let obj = Object.assign(
         {},
        this.textConfig,
+       {text:this.text},
         this.updateTextConfig
       );
       return obj;

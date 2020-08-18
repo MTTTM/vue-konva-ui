@@ -11,11 +11,17 @@ export default {
             default(){
                 return "row";// row column
             }
+        },
+        width:{
+            type:Number,
+            require:true
         }
     },
     data(){
         return {
+            componentName:'LinearLayout',
             leftDis:0,
+            innerWidth:0,//内部内容的宽度
             topDis:0
         }
     },
@@ -49,6 +55,7 @@ export default {
                 //     this.leftDis
                 // }
             }
+            this.innerWidth=this.leftDis;
         })
     }
 }
