@@ -2,23 +2,113 @@
   <v-stage :config="configKonva">
        <v-layer ref="layer">
      
-                 <k-icon 
+                 <!-- <k-icon 
                  :image="require('../../assets/image/recordG.png')" 
                  :w="138"
                   :h="138"
                   :debuger="true"
                   color="#fd0e1d"
-                  />
+                  /> -->
                 
-                <k-icon 
+                <!-- <k-icon 
                  :image="require('../../assets/icons/img2.png')" 
                  :w="138"
                   :h="138"
                   :debuger="true"
                   :x="200"
-                  :y="200"
+                  :y="10"
                   />
 
+                  <k-icon 
+                 :image="require('../../assets/icons/img1.png')" 
+                 :w="138"
+                  :h="138"
+                  :debuger="true"
+                  :x="420"
+                  :y="10"
+                  />
+
+                  <k-icon 
+                 :image="require('../../assets/icons/img3.png')" 
+                  :w="200"
+                  :h="138"
+                  :debuger="true"
+                  :x="630"
+                  :y="10"
+                  />
+
+                  <k-icon 
+                 :image="require('../../assets/icons/img3.png')" 
+                  :w="138"
+                  :h="200"
+                  :debuger="true"
+                  :x="880"
+                  :y="10"
+                  /> -->
+                <!-- contain row -->
+                <!-- <k-icon 
+                 :image="require('../../assets/icons/img2.png')" 
+                 :w="138"
+                  :h="138"
+                  :debuger="true"
+                  :x="200"
+                  :y="300"
+                  resizeMode="contain-bottom"
+                  /> -->
+
+                  <!-- <k-icon 
+                 :image="require('../../assets/icons/img2.png')" 
+                 :w="138"
+                  :h="138"
+                  :debuger="true"
+                  :x="400"
+                  :y="300"
+                  resizeMode="contain-top"
+                  /> -->
+
+
+ 
+
+                  <!-- <k-icon 
+                 :image="require('../../assets/icons/img1.png')" 
+                 :w="138"
+                  :h="138"
+                  :debuger="true"
+                  :x="630"
+                  :y="300"
+                  resizeMode="contain-left"
+                  />
+
+                  <k-icon 
+                 :image="require('../../assets/icons/img1.png')" 
+                 :w="138"
+                  :h="138"
+                  :debuger="true"
+                  :x="800"
+                  :y="300"
+                  resizeMode="contain-right"
+                  /> -->
+
+
+                  <!-- <k-icon 
+                 :image="require('../../assets/icons/img3.png')" 
+                  :w="200"
+                  :h="138"
+                  :debuger="true"
+                  :x="900"
+                  :y="300"
+                  resizeMode="contain-left"
+                  /> -->
+
+                  <k-icon 
+                 :image="require('../../assets/icons/img3.png')" 
+                  :w="138"
+                  :h="200"
+                  :debuger="true"
+                  :x="900"
+                  :y="500"
+                  resizeMode="contain-bottom"
+                  /> 
            
        </v-layer>
   </v-stage>
