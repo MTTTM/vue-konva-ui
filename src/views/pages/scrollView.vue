@@ -3,9 +3,9 @@
        <v-layer ref="layer">
         <scroll-view :height="$sizeW(44)">
             <linear-layout :width="$sizeW(667)">
-                    <kButton type="info" :mgl="10" text="1"></kButton>
-                    <kButton type="info" :mgl="10" text="2"></kButton>
-                    <kButton type="info" :mgl="10" text="3"></kButton>
+                    <kButton type="primary" :mgl="10" text="1"></kButton>
+                    <kButton type="warning" :mgl="10" text="2"></kButton>
+                    <kButton type="danger" :mgl="10" text="3"></kButton>
                     <kButton type="info" :mgl="10" text="4"></kButton>
                     <kButton type="info" :mgl="10" text="5"></kButton>
                     <kButton type="info" :mgl="10" text="6"></kButton>

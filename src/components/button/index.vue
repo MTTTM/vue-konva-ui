@@ -48,12 +48,11 @@ export default {
       textConfig: {
         text: "1",
         fontSize: 15,
-        color: "#fff",
         height:this.$sizeW(44),
         width:this.$sizeW(100),
         align: 'center',
         verticalAlign:"middle",
-        fill: 'green',
+        fill: '#fff',
       },
       updateTextConfig: {},//更新字体样式用
     };

@@ -8,5 +8,6 @@ export default{
   oragneLight:"#fffbe8",
   white:"#fff",
   black:"#000",
-  gray1:"#f7f8fa"
+  gray1:"#f7f8fa",
+  gray8:"#323233"
 }

@@ -39,6 +39,11 @@ Vue.use(VueRouter)
     path: '/scrollView',
     name: 'scrollView',
     component: () => import(/* webpackChunkName: "about" */ '../views/pages/scrollView.vue')
+  },
+  {
+    path: '/icons',
+    name: 'icons',
+    component: () => import(/* webpackChunkName: "about" */ '../views/pages/icons.vue')
   }
 ]
 
