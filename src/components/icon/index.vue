@@ -107,6 +107,11 @@ export default {
       return obj;
     },
   },
+  watch:{
+    "image"(){
+        this.drawImg();
+    }
+  },
   mounted() {
     this.$nextTick(() => {
       this.drawImg();
@@ -123,6 +128,7 @@ export default {
       this.context = canvas.getContext("2d");
       this.context.imageSmoothingEnabled = true;
       img.onload = function () {
+        console.log("加载成功？？")
         let imgW = this.width;
         let imgH = this.height;
         //   me.context.drawImage(img, 0, 0, me.w, me.h, 0, 0, imgW, imgH);
@@ -144,7 +150,7 @@ export default {
         } else {
           type = resizeMode;
         }
-
+        console.log("type==========",type)
         if (type == "contain") {
           //横向源图
           if (horizontalSourseImg) {
@@ -171,6 +177,7 @@ export default {
               drawWidth,
               drawHeight
             );
+            
           } else if (verticalSourseImg) {
             let Proportion = me.h / imgH;
             let drawHeight = me.h;
@@ -248,13 +255,16 @@ export default {
 
         me.mask.call(this, me, canvas);
       };
+      img.onerror=function(){
+        console.error("loading error");
+      }
       img.src = this.image;
     },
     /**
      * 添加蒙版
      */
     mask(me, canvas) {
-      me.context.globalCompositeOperation = "source-atop";
+    //  me.context.globalCompositeOperation = "source-atop";
       if (me.color) {
         me.context.fillStyle = me.color;
         me.context.fillRect(0, 0, me.w, me.h);
@@ -262,7 +272,10 @@ export default {
 
       var image2 = new Image();
       image2.src = canvas.toDataURL("image/png");
-      me.config.image = image2;
+      me.config={
+        ...me.config,
+        image:image2
+      }
     },
     resizeModeFn() {},
   },

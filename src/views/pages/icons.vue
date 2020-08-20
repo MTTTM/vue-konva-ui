@@ -1,5 +1,9 @@
 <template>
-  <v-stage :config="configKonva">
+  <div>
+    <select v-model="selected" style="width:200px;height:20px;position:fixed;left:0;top:0;z-index:20;">
+      <option v-for="item in selectArray" :key="item" :value="item">{{item}}</option>
+    </select>
+      <v-stage :config="configKonva" ref="stage">
        <v-layer ref="layer">
      
                  <!-- <k-icon 
@@ -8,15 +12,17 @@
                   :h="138"
                   :debuger="true"
                   color="#fd0e1d"
+                  
                   /> -->
                 
-                <!-- <k-icon 
+                 <k-icon 
                  :image="require('../../assets/icons/img2.png')" 
                  :w="138"
                   :h="138"
                   :debuger="true"
-                  :x="200"
+                  :x="20"
                   :y="10"
+                  v-if="selected=='default'"
                   />
 
                   <k-icon 
@@ -24,27 +30,29 @@
                  :w="138"
                   :h="138"
                   :debuger="true"
-                  :x="420"
+                  :x="20"
                   :y="10"
-                  />
+                  v-else-if="selected=='default1'"
+                  /> 
 
                   <k-icon 
                  :image="require('../../assets/icons/img3.png')" 
                   :w="200"
                   :h="138"
                   :debuger="true"
-                  :x="630"
+                  :x="20"
                   :y="10"
+                    v-else-if="selected=='default2'"
                   />
 
-                  <k-icon 
+                  <!-- <k-icon 
                  :image="require('../../assets/icons/img3.png')" 
                   :w="138"
                   :h="200"
                   :debuger="true"
                   :x="880"
                   :y="10"
-                  /> -->
+                  />  -->
                 <!-- contain row -->
                 <!-- <k-icon 
                  :image="require('../../assets/icons/img2.png')" 
@@ -100,7 +108,7 @@
                   resizeMode="contain-left"
                   /> -->
 
-                  <k-icon 
+                 <!-- <k-icon 
                  :image="require('../../assets/icons/img3.png')" 
                   :w="138"
                   :h="200"
@@ -108,10 +116,11 @@
                   :x="900"
                   :y="500"
                   resizeMode="contain-bottom"
-                  /> 
+                  />   -->
            
        </v-layer>
   </v-stage>
+  </div>
   <!-- <canvas id="canvas" width="200" height="200" /> -->
 </template>
 <script>
@@ -138,7 +147,20 @@ export default {
       context:"",
       imgData:"",
       imgDataResult:"",//被操作的数据
+      selected: "default1",
+      selectArray:[
+        "default",
+        "default1",
+        "default2",
+
+      ]
     };
+
+  },
+  watch:{
+    "selected"(){
+     // this.$refs['layer'].getNode().draw();
+    }
   },
   mounted(){
     //   this.$nextTick(()=>{
