@@ -7,7 +7,7 @@ import VueKonva from 'vue-konva'
 import LinearLayout from "./components/linearLayout/index"
 import ScrollView from "./components/scrollView/index"
 import kButton from "./components/button/index"
-import kIcon from "./components/icon/index"
+import kIcon from "./components/icon/image"
 
 import GLOBALColor from "./components/var.js"
 import {sizeW,sizeH} from "./utils/size"

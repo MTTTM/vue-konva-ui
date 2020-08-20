@@ -1,12 +1,11 @@
 <template>
   <v-stage :config="configKonva">
        <v-layer ref="layer">
-           <linear-layout ref="linearLayout">
+           <linear-layout ref="linearLayout" flexDir ="column">
              <template v-for="item in arr">
-                 <kButton type="info" :mgl="10" :text="item" :key="item"></kButton>
+                 <kButton type="info" :mgt="10" :mgl="10" :text="item" :key="item"></kButton>
              </template>   
            </linear-layout>
-           
        </v-layer>
   </v-stage>
 </template>

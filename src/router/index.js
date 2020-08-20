@@ -44,6 +44,16 @@ Vue.use(VueRouter)
     path: '/icons',
     name: 'icons',
     component: () => import(/* webpackChunkName: "about" */ '../views/pages/icons.vue')
+  },
+  {
+    path: '/linearLayout',
+    name: 'linearLayout',
+    component: () => import(/* webpackChunkName: "about" */ '../views/pages/linearLayout.vue')
+  },
+  {
+    path: '/linearLayout2',
+    name: 'linearLayout2',
+    component: () => import(/* webpackChunkName: "about" */ '../views/pages/linearLayout2.vue')
   }
 ]
 

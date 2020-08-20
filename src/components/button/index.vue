@@ -29,6 +29,12 @@ export default {
         return 0;
       },
     },
+    mgt: {
+      type: Number,
+      default() {
+        return 0;
+      },
+    },
     text:{
         required:true,
         type:[String,Number]
@@ -58,6 +64,7 @@ export default {
     };
   },
   computed: {
+    //实际样式
     endConfig() {
       let types = {
         primary: {
@@ -84,12 +91,14 @@ export default {
       //更新字体样式
       this.textConfig = Object.assign({},this.textConfig,{
         x: obj.x,
+        y:obj.y,
         height:obj.height,
         text:this.text
       });
 
       return obj;
     },
+    //实际字体样式
     textEndConfig() {
       let obj = Object.assign(
         {},
@@ -101,7 +110,23 @@ export default {
     },
   },
   created() {
-    console.log("按钮组件", this.$VAL);
+    //console.log("按钮组件", this.$VAL);
+  },
+  beforeDestroy() {
+  //  console.log("按钮组件销毁",this.$parent.$parent.componentName)
+    let parent=this.$parent;
+    let i=0;
+    while(parent){
+      i++;
+      if(i>2){
+        break;
+      }
+      if(parent.componentName=='LinearLayout'){
+        parent.updateChildLayOut();
+        break;
+      }
+      parent=parent.$parent;
+    }
   },
   methods: {},
 };
