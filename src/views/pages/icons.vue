@@ -5,23 +5,13 @@
     </select>
       <v-stage :config="configKonva" ref="stage">
        <v-layer ref="layer">
-     
                  <!-- <k-icon 
-                 :image="require('../../assets/image/recordG.png')" 
-                 :w="138"
-                  :h="138"
-                  :debuger="true"
-                  color="#fd0e1d"
-                  
-                  /> -->
-                
-                 <k-icon 
-                 :image="require('../../assets/icons/img2.png')" 
-                 :w="138"
+                  :image="require('../../assets/icons/img2.png')" 
+                  :w="138"
                   :h="138"
                   :debuger="true"
                   :x="20"
-                  :y="10"
+                  :y="40"
                   v-if="selected=='default'"
                   />
 
@@ -31,92 +21,114 @@
                   :h="138"
                   :debuger="true"
                   :x="20"
-                  :y="10"
+                  :y="40"
                   v-else-if="selected=='default1'"
                   /> 
+                  <k-icon 
+                 :image="require('../../assets/icons/img3.png')" 
+                  :w="138"
+                  :h="200"
+                  :debuger="true"
+                  :x="10"
+                  :y="40"
+                  v-else-if="selected=='垂直容器正方形-顶部'"
+                  />  
 
+               <k-icon 
+                 :image="require('../../assets/icons/img2.png')" 
+                 :w="138"
+                  :h="138"
+                  :debuger="true"
+                  :x="10"
+                  :y="40"
+                  resizeMode="contain-bottom"
+                  v-else-if="selected=='contain-bottom-2'"
+                  /> 
+
+                   <k-icon 
+                 :image="require('../../assets/icons/img2.png')" 
+                 :w="138"
+                  :h="138"
+                  :debuger="true"
+                  :x="10"
+                  :y="40"
+                  resizeMode="contain-top"
+                   v-else-if="selected=='contain-top-1'"
+                  />
+
+                   <k-icon 
+                 :image="require('../../assets/icons/img1.png')" 
+                 :w="138"
+                  :h="138"
+                  :debuger="true"
+                  :x="10"
+                  :y="40"
+                  resizeMode="contain-left"
+                  v-else-if="selected=='contain-left-2'"
+                  />
+
+                   <k-icon 
+                 :image="require('../../assets/icons/img1.png')" 
+                 :w="138"
+                  :h="138"
+                  :debuger="true"
+                  :x="0"
+                  :y="40"
+                  resizeMode="contain-right"
+                   v-else-if="selected=='contain-right-1'"
+                  /> 
+
+
+                  <k-icon 
+                 :image="require('../../assets/icons/img3.png')" 
+                  :w="200"
+                  :h="138"
+                  :debuger="true"
+                  :x="0"
+                  :y="40"
+                  resizeMode="contain-left"
+                  v-else-if="selected=='contain-left-1'"
+                  /> 
                   <k-icon 
                  :image="require('../../assets/icons/img3.png')" 
                   :w="200"
                   :h="138"
                   :debuger="true"
                   :x="20"
-                  :y="10"
+                  :y="40"
                     v-else-if="selected=='default2'"
                   />
 
-                  <!-- <k-icon 
-                 :image="require('../../assets/icons/img3.png')" 
-                  :w="138"
-                  :h="200"
-                  :debuger="true"
-                  :x="880"
-                  :y="10"
-                  />  -->
-                <!-- contain row -->
-                <!-- <k-icon 
-                 :image="require('../../assets/icons/img2.png')" 
-                 :w="138"
-                  :h="138"
-                  :debuger="true"
-                  :x="200"
-                  :y="300"
-                  resizeMode="contain-bottom"
-                  /> -->
-
-                  <!-- <k-icon 
-                 :image="require('../../assets/icons/img2.png')" 
-                 :w="138"
-                  :h="138"
-                  :debuger="true"
-                  :x="400"
-                  :y="300"
-                  resizeMode="contain-top"
-                  /> -->
-
-
- 
-
-                  <!-- <k-icon 
-                 :image="require('../../assets/icons/img1.png')" 
-                 :w="138"
-                  :h="138"
-                  :debuger="true"
-                  :x="630"
-                  :y="300"
-                  resizeMode="contain-left"
-                  />
-
                   <k-icon 
-                 :image="require('../../assets/icons/img1.png')" 
-                 :w="138"
-                  :h="138"
-                  :debuger="true"
-                  :x="800"
-                  :y="300"
-                  resizeMode="contain-right"
-                  /> -->
-
-
-                  <!-- <k-icon 
-                 :image="require('../../assets/icons/img3.png')" 
-                  :w="200"
-                  :h="138"
-                  :debuger="true"
-                  :x="900"
-                  :y="300"
-                  resizeMode="contain-left"
-                  /> -->
-
-                 <!-- <k-icon 
                  :image="require('../../assets/icons/img3.png')" 
                   :w="138"
                   :h="200"
                   :debuger="true"
-                  :x="900"
-                  :y="500"
+                  :x="0"
+                  :y="40"
                   resizeMode="contain-bottom"
+                   v-else-if="selected=='contain-bottom-1'"
                   />   -->
+                  <!-- <k-icon 
+                  image="/cat465464654.jpeg" 
+                  :w="138"
+                  :h="200"
+                  :debuger="true"
+                  :x="0"
+                  :y="40"
+                  resizeMode="contain"
+                  
+                  />   -->
+                   <k-icon 
+                  image="https://picb.zhimg.com/80/v2-bb0dac1079dc1d3a1584fc0e3aab08d7_720w.jpg" 
+                  :w="138"
+                  :h="200"
+                  :debuger="true"
+                  :x="0"
+                  :y="40"
+                  resizeMode="contain"
+                  
+                  />  
            
        </v-layer>
   </v-stage>
@@ -147,11 +159,20 @@ export default {
       context:"",
       imgData:"",
       imgDataResult:"",//被操作的数据
-      selected: "default1",
+      selected: "网络加载失败",
       selectArray:[
+        "",
         "default",
         "default1",
         "default2",
+        '垂直容器正方形-顶部',
+        'contain-bottom-2',
+        'contain-top-1',
+        'contain-left-2',
+        'contain-right-1',
+        'contain-left-1',
+        'contain-bottom-1',
+         "网络加载失败",
 
       ]
     };
@@ -167,6 +188,7 @@ export default {
     //       this.loadImg();
     //   })
   },
+ 
   methods: {
     loadImg() {
     //   var img = new Image();
