@@ -272,6 +272,11 @@ export default {
           console.log("sourseImgSortSideHeight", sourseImgSortSideHeight);
           let xPos = (me.w - size) / 2;
           let yPos = (me.h - size) / 2;
+          
+           me.context.save();
+          me.context.fillStyle="#f7f8fa";
+          me.context.fillRect(0,0,me.w,me.h);
+          me.context.restore();
           //img,裁剪位置X，裁剪位置Y,裁剪宽，裁剪高，绘制X，绘制Y，绘制宽，绘制高
           me.context.drawImage(img2, 0, 0, size, size, xPos, yPos, size, size);
           me.mask.call(this, me, canvas);
