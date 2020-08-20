@@ -14,7 +14,10 @@ export default {
     },
     width: {
       type: Number,
-      require: true,
+    },
+    height:{
+      type:Number,
+      required:true
     },
     mgt:{
       type:Number,
@@ -35,14 +38,14 @@ export default {
       innerWidth: 0, //内部内容的宽度
       topDis: 0,
       innerHeight:0,//容器的高度
-      
-      
-      
       defaultConfig: {
           x: 0,
           y: 0,
+          gml:0,
+          mgt:0,
           width: document.documentElement.clientWidth,
           height: this.$sizeW(44),
+          
         },
       updateConfig: {},//更新样式用  
     };
@@ -53,14 +56,18 @@ export default {
       let obj = Object.assign(
         {},
         this.defaultConfig,
-        this.updateConfig
+        {height:this.height},
+        this.updateConfig,
+        {
+         fill: 'red',
+        }
       );
       return obj;
     },
   },
   mounted() {
     this.updateChildLayOut();
-    
+    console.log("this.props,this.data",this,this.data)
   },
   methods: {
     updateRowLayout() {
@@ -75,9 +82,10 @@ export default {
           //    console.log("childrens[i]",childrens[i].$children[0].getNode())
           let dom = childrens[i].$children[0].getNode();
           let vm = childrens[i];
+          let width=vm.width?vm.width:vm.defaultConfig.width;
           if (i > 0) {
             this.leftDis +=
-              vm.defaultConfig.width + vm.defaultConfig.x + vm.mgl;
+              width + vm.defaultConfig.x + vm.mgl;
           } else {
             this.leftDis += vm.defaultConfig.x + vm.mgl;
             // console.log(
@@ -108,22 +116,26 @@ export default {
       this.$nextTick(() => {
         let childrens = this.$refs["slot"].$children;
         for (let i = 0; i < childrens.length; i++) {
-              console.log("childrens[i]",childrens[i].$children[0].getNode())
           let dom = childrens[i].$children[0].getNode();
           let vm = childrens[i];
+          let height=vm.height?this.$sizeW(vm.height):vm.defaultConfig.height;
+          let mgt=vm.mgt?vm.mgt:0;
           if (i > 0) {
             this.topDis +=
-              vm.defaultConfig.height + vm.defaultConfig.y + vm.mgt;
+              height + vm.defaultConfig.y + mgt;
           } else {
-            this.topDis += vm.defaultConfig.y + vm.mgt;
+            this.topDis += vm.defaultConfig.y + mgt;
             
           }
           console.log(
             this.name,
-              "000000000000////788---",
+              "before-update",
               i,
+              "y:",
               vm.defaultConfig.y,
-              "height",
+              "x:",
+              vm.defaultConfig.x,
+              "height:",
               vm.defaultConfig.height,
               "mgt",
               vm.mgt
@@ -136,6 +148,20 @@ export default {
           vm.updateTextConfig = {
             y: this.topDis,
           };
+
+          console.log(
+            this.name,
+              "after-update",
+              i,
+              "y:",
+               vm.updateConfig.y,
+              "x:",
+               vm.updateConfig.x,
+              "height:",
+               vm.updateConfig.height,
+              "mgt",
+              vm.mgt
+            );
         }
         this.innerHeight = this.topDis;
       });

@@ -48,7 +48,6 @@ export default {
         width: this.$sizeW(100),
         height: this.$sizeW(44),
         fill: "#07c160",
-        shadowBlur: 10,
       },
       updateConfig: {},//更新样式用
       textConfig: {
