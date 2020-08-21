@@ -4,7 +4,7 @@ import router from './router'
 import store from './store'
 import canvasHtml from './components/canvasHtml.js'
 import VueKonva from 'vue-konva'
-import LinearLayout from "./components/linearLayout/index"
+import LinearLayout from "./components/linearLayout/linearLayout"
 import ScrollView from "./components/scrollView/index"
 import kButton from "./components/button/index"
 import kIcon from "./components/icon/image"
