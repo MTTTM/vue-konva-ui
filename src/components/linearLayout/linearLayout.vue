@@ -1,7 +1,8 @@
 <template>
-  <v-group ref="slot" :config="endConfig" @mouseover="mouseoverfun">
+  <v-group ref="slot" :config="endConfig">
+    
     <slot></slot>
-    <v-rect :config="holidConfig" ref="react" />
+     <v-rect :config="holidConfig" ref="react"   @click.self="mouseoverfun" v-if="debugerStatus||debugerColor"/>
   </v-group>
 </template>
 <script>
@@ -32,8 +33,7 @@ export default {
       type: String,
     },
     debugerColor: {
-      type: String,
-      default: "black",
+      type: String
     },
   },
   data() {
@@ -53,9 +53,13 @@ export default {
       },
       updateConfig: {}, //更新样式用
       strokeBackgroundColor: "black",
+      show:1,
     };
   },
   computed: {
+    debugerStatus(){
+      return this.$DEBUGER
+    },
     //实际样式
     endConfig() {
       let obj = Object.assign(
@@ -73,22 +77,36 @@ export default {
       return {
         x: 0,
         y: 0,
-        width: this.width ? this.width : this.defaultConfig.width,
+        width: this.width ? this.$sizeW(this.width) : this.defaultConfig.width,
         height: this.$sizeW(this.height),
-        stroke: this.debugerColor,
+        stroke: this.strokeBackgroundColor?this.strokeBackgroundColor:'red',
         strokeWidth: 1,
+        zIndex:0
       };
     },
   },
   mounted() {
+    this.strokeBackgroundColor=this.debugerColor;
     this.updateChildLayOut();
+    this.$refs['react'].getNode().zIndex(0);
     console.log("this.props,this.data", this, this.data);
   },
   methods: {
     mouseoverfun() {
-      this.strokeBackgroundColor = "green";
-      // this.$refs['react'].getNode().stroke('red');
-      console.log("hover", this.$refs["react"].getNode().stroke);
+      // this.strokeBackgroundColor="yellow";
+      // this.$refs['react'].getNode().stroke('yellow');
+      // this.$parent.getNode().draw()
+      // console.log("hover");
+      // this.show=!this.show;
+      // if(this.show){
+      //    this.$refs['react'].getNode().hide();
+      // }
+      // else{
+      //    this.$refs['react'].getNode().show();
+      // }
+     
+      // this.$parent.getNode().draw()
+      console.log("点击了容器")
     },
     updateRowLayout() {
       console.log("LinearLayout", this.$refs["slot"].$children);
@@ -216,7 +234,7 @@ export default {
       } else {
         this.updateRowLayout();
       }
-    },
+    }
   },
 };
 </script>

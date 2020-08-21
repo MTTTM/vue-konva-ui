@@ -28,23 +28,23 @@
 
          <linear-layout  name="layout10" :mgt="10" :height="216" :key="3" debugerColor="red">
            
-          <linear-layout flexDir="column" name="layout11" :mgt="10" :height="180" :width="44" key="1">
+          <linear-layout flexDir="column" name="layout11" :mgt="10" :height="180" :width="100" key="1">
             <template v-for="(item,index) in [11,12,13,14]">
               <kButton type="info" :mgl="10" :mgt="index>0?10:0" :text="item" :key="item"></kButton>
             </template>
           </linear-layout>
-         <linear-layout flexDir="column" name="layout11" :mgt="10" :height="180" :width="44" key="1">
+         <linear-layout flexDir="column" name="layout11" :mgt="10" :height="180" :width="100" key="1">
             <template v-for="(item,index) in [11,12,13,14]">
               <kButton type="info" :mgl="10" :mgt="index>0?10:0" :text="item" :key="item"></kButton>
             </template>
           </linear-layout>
 
-           <linear-layout flexDir="column" name="layout12" :mgl="10" :height="180" :width="44" key="5">
+           <linear-layout flexDir="column" name="layout12" :mgl="10" :height="180" :width="100" key="5">
             <template  v-for="(item,index) in [11,12,13,14]">
               <kButton type="primary" :mgl="10" :mgt="index>0?10:0" :text="item" :key="item"></kButton>
             </template>
           </linear-layout>
-           <linear-layout flexDir="column" name="layout12" :mgl="10" :height="180" :width="44" key="6">
+           <linear-layout flexDir="column" name="layout12" :mgl="10" :height="180" :width="100" key="6">
             <template v-for="(item,index) in [11,12,13,14]">
               <kButton type="primary" :mgl="10" :mgt="index>0?10:0" :text="item" :key="item"></kButton>
             </template>
@@ -73,12 +73,13 @@ export default {
     };
   },
   mounted() {
-    // this.$nextTick(() => {
-    //   document.onclick = () => {
-    //     this.arr.splice(0, 1);
-    //     //  console.log("this.$parents",this.$parent)
-    //   };
-    // });
+    this.$nextTick(() => {
+      // document.onclick = () => {
+      //   this.arr.splice(0, 1);
+      //   //  console.log("this.$parents",this.$parent)
+      // };
+      console.log("layer",this.$refs['layer'].$vnode.tag,this.$refs['layer'].$)
+    });
   },
 };
 </script>

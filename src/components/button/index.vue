@@ -1,7 +1,11 @@
 <template>
   <v-group ref="slot">
-    <v-rect :config="endConfig"></v-rect>
-    <v-text :config="textEndConfig" />
+    <v-rect :config="endConfig"  ></v-rect>
+    <v-text :config="textEndConfig"
+     @touchstart="mouseoverfun"
+     @touchend="mouseup"
+     @mousedown="mouseoverfun"
+      @mouseup="mouseup"/>
   </v-group>
 </template>
 <script>
@@ -48,6 +52,7 @@ export default {
         width: this.$sizeW(100),
         height: this.$sizeW(44),
         fill: "#07c160",
+        opacity:1,
       },
       updateConfig: {},//更新样式用
       textConfig: {
@@ -127,6 +132,14 @@ export default {
       parent=parent.$parent;
     }
   },
-  methods: {},
+  methods: {
+    mouseoverfun(){
+      this.defaultConfig.opacity=0.5;
+      console.log("点击")
+    },
+    mouseup(){
+      this.defaultConfig.opacity=1;
+    }
+  },
 };
 </script>
