@@ -1,7 +1,9 @@
 <template>
-  <v-group ref="slot" :config="endConfig">
-    <slot></slot>
-     <v-rect :config="holidConfig" ref="react"   @click.self="mouseoverfun" v-if="debugerStatus||debugerColor"/>
+  <v-group  :config="endConfig">
+    <v-rect :config="holidConfig"    @click="mouseoverfun" v-if="debugerStatus||debugerColor"/>
+    <v-group ref="slot">
+     <slot></slot>
+    </v-group>
   </v-group>
 </template>
 <script>
@@ -98,12 +100,15 @@ export default {
   mounted() {
     this.strokeBackgroundColor=this.debugerColor;
     this.updateChildLayOut();
-    this.$refs['react'].getNode().zIndex(0);
-    console.log("this.props,this.data", this, this.data);
   },
   methods: {
     mouseoverfun() {
-      // this.strokeBackgroundColor="yellow";
+      if(this.strokeBackgroundColor=="green"){
+        this.strokeBackgroundColor=this.debugerColor?this.debugerColor:"red"
+      }
+      else{
+        this.strokeBackgroundColor="green";
+      }
       // this.$refs['react'].getNode().stroke('yellow');
       // this.$parent.getNode().draw()
       // console.log("hover");
@@ -119,14 +124,13 @@ export default {
       console.log("点击了容器")
     },
     updateRowLayout() {
-      console.log("LinearLayout", this.$refs["slot"].$children);
       this.leftDis = 0;
       this.innerWidth = 0;
       this.innerHeight = 0;
       this.topDis = 0;
       this.$nextTick(() => {
         let childrens = this.$refs["slot"].$children;
-        console.log("childrens", childrens);
+        console.log(this.name,"childrens", childrens,childrens[0].defaultConfig);
         for (let i = 0; i < childrens.length; i++) {
           let vm = childrens[i];
           if(vm.defaultConfig==undefined){
@@ -138,6 +142,7 @@ export default {
             this.leftDis += width + vm.defaultConfig.x + vm.endMgl;
           } else {
             this.leftDis += vm.defaultConfig.x + vm.endMgl;
+            console.log(this.name,"this.leftDis",this.leftDis,"vm.defaultConfig.x",vm.defaultConfig.x ,"vm.endMgl",vm.endMgl)
           }
           console.log("*/*//", i, this.leftDis);
           vm.updateConfig = {};
@@ -168,7 +173,7 @@ export default {
           let preVm = childrens[i - 1];
           //这里拿容器的高？
           let height = 0;
-          if (preVm) {
+          if (preVm&&preVm.defaultConfig) {
             height=preVm.height
               ? preVm.height
               : preVm.defaultConfig.height;

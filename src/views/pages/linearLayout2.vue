@@ -6,9 +6,10 @@
         name="layout-out"
         :width="2000"
         :height="800"
-        debugerColor="green"
+        
       >
-        <!-- <linear-layout name="layout1" :height="44">
+   
+        <linear-layout name="layout11" :height="44">
           <template v-for="item in arr" :width="500">
             <kButton type="info" :mgl="10" :text="item" :key="item"></kButton>
           </template>
@@ -23,15 +24,15 @@
           <template v-for="item in arr">
             <kButton type="info" :mgl="10" :text="item" :key="item"></kButton>
           </template>
-        </linear-layout> -->
+        </linear-layout>
 
         <linear-layout
           flexDir="column"
           name="layout11"
           :mgt="10"
+          :mgl="10"
           :height="206"
           :width="110"
-          key="1"
         >
           <template v-for="(item,index) in [11,12,13,14]">
             <kButton type="info" :mgl="10" :mgt="index>0?10:0" :text="item" :key="item"></kButton>
@@ -70,19 +71,19 @@
             key="5"
           >
             <template v-for="(item,index) in [11,12,13,14]">
-              <kButton type="primary" :mgl="10" :mgt="index>0?10:0" :text="item" :key="item"></kButton>
+              <kButton type="primary"  :mgt="index>0?10:0" :text="item" :key="item"></kButton>
             </template>
           </linear-layout>
           <linear-layout
             flexDir="column"
             name="layout12"
-            :mgl="10"
+            :mgl="20"
             :height="206"
-            :width="120"
+            :width="110"
             key="6"
           >
             <template v-for="(item,index) in [11,12,13,14]">
-              <kButton type="primary" :mgl="10" :mgt="index>0?10:0" :text="item" :key="item"></kButton>
+              <kButton type="primary"  :mgt="index>0?10:0" :text="item" :key="item"></kButton>
             </template>
           </linear-layout>
         </linear-layout>
