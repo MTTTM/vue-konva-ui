@@ -1,17 +1,22 @@
 <template>
   <v-group ref="slot">
-    <v-rect :config="endConfig"  ></v-rect>
-    <v-text :config="textEndConfig"
-     @touchstart="mouseoverfun"
-     @touchend="mouseup"
-     @mousedown="mouseoverfun"
-      @mouseup="mouseup"/>
+    <v-rect :config="endConfig"></v-rect>
+    <v-text
+      :config="textEndConfig"
+      @touchstart="mouseoverfun"
+      @touchend="mouseup"
+      @mousedown="mouseoverfun"
+      @mouseup="mouseup"
+    />
   </v-group>
 </template>
 <script>
 import Var from "../var";
+import LayoutMixins from "../mixin/layout";
+import {sizeW,sizeH} from "../../utils/size"
 export default {
   name: "kButton",
+  mixins: [LayoutMixins],
   props: {
     config: {
       required: false,
@@ -39,32 +44,40 @@ export default {
         return 0;
       },
     },
-    text:{
-        required:true,
-        type:[String,Number]
-    }
+    text: {
+      required: true,
+      type: [String, Number],
+    },
+    width: {
+      type: Number,
+      default: () => 100,
+    },
+    height: {
+      type: Number,
+      default: () => 44,
+    },
   },
   data() {
     return {
       defaultConfig: {
         x: 0,
         y: 0,
-        width: this.$sizeW(100),
-        height: this.$sizeW(44),
+        width: 100,
+        height: 44,
         fill: "#07c160",
-        opacity:1,
+        opacity: 1,
       },
-      updateConfig: {},//更新样式用
+      updateConfig: {}, //更新样式用
       textConfig: {
         text: "1",
         fontSize: 15,
-        height:this.$sizeW(44),
-        width:this.$sizeW(100),
-        align: 'center',
-        verticalAlign:"middle",
-        fill: '#fff',
+        height: 44,
+        width: 100,
+        align: "center",
+        verticalAlign: "middle",
+        fill: "#fff",
       },
-      updateTextConfig: {},//更新字体样式用
+      updateTextConfig: {}, //更新字体样式用
     };
   },
   computed: {
@@ -85,20 +98,29 @@ export default {
         },
       };
       let endStyles = types[this.type] ? types[this.type] : types["primary"];
+      let computedLayout = {
+        x: this.endX,
+        y: this.endY,
+        // mgt:this.endMgt,
+        // mgl:this.endMgl,
+        width: this.endWidth,
+        height: this.endHeight,
+      };
+      console.log("computedLayout",this.width,this.$sizeW(this.width))
       let obj = Object.assign(
         {},
         this.defaultConfig,
         endStyles,
         this.config,
+        computedLayout, //适配后的尺寸
         this.updateConfig
       );
       //更新字体样式
-      this.textConfig = Object.assign({},this.textConfig,{
-        x: obj.x,
-        y:obj.y,
-        height:obj.height,
-        text:this.text
-      });
+      this.textConfig = Object.assign({}, 
+      this.textConfig,
+      computedLayout, //适配后的尺寸
+      this.updateTextConfig
+      );
 
       return obj;
     },
@@ -106,8 +128,8 @@ export default {
     textEndConfig() {
       let obj = Object.assign(
         {},
-       this.textConfig,
-       {text:this.text},
+        this.textConfig,
+        { text: this.text },
         this.updateTextConfig
       );
       return obj;
@@ -117,29 +139,29 @@ export default {
     //console.log("按钮组件", this.$VAL);
   },
   beforeDestroy() {
-  //  console.log("按钮组件销毁",this.$parent.$parent.componentName)
-    let parent=this.$parent;
-    let i=0;
-    while(parent){
+    //  console.log("按钮组件销毁",this.$parent.$parent.componentName)
+    let parent = this.$parent;
+    let i = 0;
+    while (parent) {
       i++;
-      if(i>2){
+      if (i > 2) {
         break;
       }
-      if(parent.componentName=='LinearLayout'){
+      if (parent.componentName == "LinearLayout") {
         parent.updateChildLayOut();
         break;
       }
-      parent=parent.$parent;
+      parent = parent.$parent;
     }
   },
   methods: {
-    mouseoverfun(){
-      this.defaultConfig.opacity=0.5;
-      console.log("点击")
+    mouseoverfun() {
+      this.defaultConfig.opacity = 0.5;
+      console.log("点击");
     },
-    mouseup(){
-      this.defaultConfig.opacity=1;
-    }
+    mouseup() {
+      this.defaultConfig.opacity = 1;
+    },
   },
 };
 </script>

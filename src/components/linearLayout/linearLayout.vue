@@ -1,34 +1,35 @@
 <template>
   <v-group ref="slot" :config="endConfig">
-    
     <slot></slot>
      <v-rect :config="holidConfig" ref="react"   @click.self="mouseoverfun" v-if="debugerStatus||debugerColor"/>
   </v-group>
 </template>
 <script>
+import LayoutMixins from "../mixin/layout"
 export default {
   name: "LinearLayout",
+  mixins:[LayoutMixins],
   props: {
     flexDir: {
       default() {
         return "row"; // row column
       },
     },
-    width: {
-      type: Number,
-    },
-    height: {
-      type: Number,
-      required: true,
-    },
-    mgt: {
-      type: Number,
-      default: 0,
-    },
-    mgl: {
-      type: Number,
-      default: 0,
-    },
+    // width: {
+    //   type: Number,
+    // },
+    // height: {
+    //   type: Number,
+    //   required: true,
+    // },
+    // mgt: {
+    //   type: Number,
+    //   default: 0,
+    // },
+    // mgl: {
+    //   type: Number,
+    //   default: 0,
+    // },
     name: {
       type: String,
     },
@@ -62,10 +63,19 @@ export default {
     },
     //实际样式
     endConfig() {
+       let computedLayout={
+          x:this.endX,
+          y:this.endY,
+          // mgt:this.endMgt,
+          // mgl:this.endMgl,
+          width:this.endWidth,
+          height:this.endHeight
+        };
+      console.log(this.name,"computedLayout",computedLayout)
       let obj = Object.assign(
         {},
         this.defaultConfig,
-        { height: this.height },
+       computedLayout,
         this.updateConfig,
         {
           fill: "red",
@@ -77,8 +87,8 @@ export default {
       return {
         x: 0,
         y: 0,
-        width: this.width ? this.$sizeW(this.width) : this.defaultConfig.width,
-        height: this.$sizeW(this.height),
+        width: this.endWidth?this.endWidth : this.defaultConfig.width,
+        height: this.endHeight?this.endHeight:this.defaultConfig.height,
         stroke: this.strokeBackgroundColor?this.strokeBackgroundColor:'red',
         strokeWidth: 1,
         zIndex:0
@@ -123,11 +133,11 @@ export default {
             continue;
           }
           
-          let width = vm.width ? vm.width : vm.defaultConfig.width;
+          let width = vm.endWidth ? vm.endWidth : vm.defaultConfig.width;
           if (i > 0) {
-            this.leftDis += width + vm.defaultConfig.x + vm.mgl;
+            this.leftDis += width + vm.defaultConfig.x + vm.endMgl;
           } else {
-            this.leftDis += vm.defaultConfig.x + vm.mgl;
+            this.leftDis += vm.defaultConfig.x + vm.endMgl;
           }
           console.log("*/*//", i, this.leftDis);
           vm.updateConfig = {};
@@ -163,12 +173,12 @@ export default {
           console.log(this.name, i, "preVm", preVm, preVm ? preVm.height : 0);
           if (preVm) {
             height=preVm.height
-              ? this.$sizeW(preVm.height)
+              ? preVm.height
               : preVm.defaultConfig.height;
           } else {
             height = 0;
           }
-          let mgt = vm.mgt ? vm.mgt : 0;
+          let mgt = vm.endMgt ? vm.endMgt : 0;
             console.log(
               this.name,
               "before-update",
@@ -180,7 +190,7 @@ export default {
               "height:",
               vm.defaultConfig.height,
               "mgt",
-              vm.mgt,
+              vm.endMgt,
               "topDis",
               this.topDis
             );
@@ -220,7 +230,7 @@ export default {
             "height:",
             vm.updateConfig.height,
             "mgt",
-            vm.mgt,
+            vm.endMgt,
             "topDis",
             this.topDis
           );

@@ -21,7 +21,7 @@ Vue.component('k-button', kButton)
 Vue.component('k-icon', kIcon)
 Vue.config.productionTip = false
 Vue.prototype.$VAL=GLOBALColor;
-// Vue.prototype.$DEBUGER=true;
+Vue.prototype.$DEBUGER=true;
 //计算尺寸
 Vue.prototype.$sizeW=sizeW;
 Vue.prototype.$sizeH=sizeH;
