@@ -5,7 +5,7 @@
     </select>
       <v-stage :config="configKonva" ref="stage">
        <v-layer ref="layer">
-                 <!-- <k-icon 
+                 <k-icon 
                   :image="require('../../assets/icons/img2.png')" 
                   :w="138"
                   :h="138"
@@ -13,6 +13,7 @@
                   :x="20"
                   :y="40"
                   v-if="selected=='default'"
+                  :key="1"
                   />
 
                   <k-icon 
@@ -23,6 +24,7 @@
                   :x="20"
                   :y="40"
                   v-else-if="selected=='default1'"
+                  :key="2"
                   /> 
                   <k-icon 
                  :image="require('../../assets/icons/img3.png')" 
@@ -32,6 +34,7 @@
                   :x="10"
                   :y="40"
                   v-else-if="selected=='垂直容器正方形-顶部'"
+                  :key="3"
                   />  
 
                <k-icon 
@@ -43,6 +46,7 @@
                   :y="40"
                   resizeMode="contain-bottom"
                   v-else-if="selected=='contain-bottom-2'"
+                   :key="4"
                   /> 
 
                    <k-icon 
@@ -54,6 +58,7 @@
                   :y="40"
                   resizeMode="contain-top"
                    v-else-if="selected=='contain-top-1'"
+                    :key="5"
                   />
 
                    <k-icon 
@@ -65,6 +70,7 @@
                   :y="40"
                   resizeMode="contain-left"
                   v-else-if="selected=='contain-left-2'"
+                  :key="6"
                   />
 
                    <k-icon 
@@ -76,6 +82,7 @@
                   :y="40"
                   resizeMode="contain-right"
                    v-else-if="selected=='contain-right-1'"
+                   :key="7"
                   /> 
 
 
@@ -88,6 +95,7 @@
                   :y="40"
                   resizeMode="contain-left"
                   v-else-if="selected=='contain-left-1'"
+                    :key="8"
                   /> 
                   <k-icon 
                  :image="require('../../assets/icons/img3.png')" 
@@ -97,6 +105,7 @@
                   :x="20"
                   :y="40"
                     v-else-if="selected=='default2'"
+                      :key="9"
                   />
 
                   <k-icon 
@@ -108,7 +117,8 @@
                   :y="40"
                   resizeMode="contain-bottom"
                    v-else-if="selected=='contain-bottom-1'"
-                  />   -->
+                    :key="10"
+                  />   
                   <!-- <k-icon 
                   image="/cat465464654.jpeg" 
                   :w="138"
@@ -118,7 +128,7 @@
                   :y="40"
                   resizeMode="contain"
                   
-                  />   -->
+                  />  
                    <k-icon 
                   image="https://picb.zhimg.com/80/v2-bb0dac1079dc1d3a1584fc0e3aab08d7_720w.jpg" 
                   :w="138"
@@ -129,11 +139,12 @@
                   resizeMode="contain"
                   
                   />  
+                  -->
            
        </v-layer>
   </v-stage>
   </div>
-  <!-- <canvas id="canvas" width="200" height="200" /> -->
+
 </template>
 <script>
 let width = window.outerWidth;
