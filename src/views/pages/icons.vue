@@ -119,16 +119,7 @@
                    v-else-if="selected=='contain-bottom-1'"
                     :key="10"
                   />   
-                  <!-- <k-icon 
-                  image="/cat465464654.jpeg" 
-                  :w="138"
-                  :h="200"
-                  :debuger="true"
-                  :x="0"
-                  :y="40"
-                  resizeMode="contain"
-                  
-                  />  
+
                    <k-icon 
                   image="https://picb.zhimg.com/80/v2-bb0dac1079dc1d3a1584fc0e3aab08d7_720w.jpg" 
                   :w="138"
@@ -137,9 +128,10 @@
                   :x="0"
                   :y="40"
                   resizeMode="contain"
-                  
+                  key="22"
+                   v-else-if="selected=='网络加载失败'"
                   />  
-                  -->
+                  
            
        </v-layer>
   </v-stage>

@@ -108,6 +108,15 @@ export default {
       this.drawImg();
     },
   },
+  beforeDestroy() {
+      console.log("mounted  beforeDestroy");
+    },
+    created() {
+      console.log("mounted created");
+    },
+    activated() {
+      console.log("mounted activated");
+    },
   mounted() {
     console.log("mounted  mounted");
     this.$nextTick(() => {
@@ -311,15 +320,7 @@ export default {
       };
     },
     resizeModeFn() {},
-    beforeDestroy() {
-      console.log("mounted  beforeDestroy");
-    },
-    created() {
-      console.log("mounted created");
-    },
-    activated() {
-      console.log("mounted activated");
-    },
+    
   },
 };
 </script>
