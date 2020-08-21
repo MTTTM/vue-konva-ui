@@ -1,7 +1,7 @@
 <template>
   <v-group ref="slot" :config="endConfig" @mouseover="mouseoverfun">
     <slot></slot>
-    <v-rect :config="holidConfig"  ref="react" />
+    <v-rect :config="holidConfig" ref="react" />
   </v-group>
 </template>
 <script>
@@ -31,10 +31,10 @@ export default {
     name: {
       type: String,
     },
-    debugerColor:{
-      type:String,
-      default:"black"
-    }
+    debugerColor: {
+      type: String,
+      default: "black",
+    },
   },
   data() {
     return {
@@ -52,7 +52,7 @@ export default {
         height: this.$sizeW(44),
       },
       updateConfig: {}, //更新样式用
-      strokeBackgroundColor:"black"
+      strokeBackgroundColor: "black",
     };
   },
   computed: {
@@ -74,7 +74,7 @@ export default {
         x: 0,
         y: 0,
         width: this.width ? this.width : this.defaultConfig.width,
-        height: this.height,
+        height: this.$sizeW(this.height),
         stroke: this.debugerColor,
         strokeWidth: 1,
       };
@@ -86,9 +86,9 @@ export default {
   },
   methods: {
     mouseoverfun() {
-      this.strokeBackgroundColor="green"
-     // this.$refs['react'].getNode().stroke('red');
-      console.log("hover", this.$refs['react'].getNode().stroke)
+      this.strokeBackgroundColor = "green";
+      // this.$refs['react'].getNode().stroke('red');
+      console.log("hover", this.$refs["react"].getNode().stroke);
     },
     updateRowLayout() {
       console.log("LinearLayout", this.$refs["slot"].$children);
@@ -98,21 +98,18 @@ export default {
       this.topDis = 0;
       this.$nextTick(() => {
         let childrens = this.$refs["slot"].$children;
+        console.log("childrens", childrens);
         for (let i = 0; i < childrens.length; i++) {
-          //    console.log("childrens[i]",childrens[i].$children[0].getNode())
-          let dom = childrens[i].$children[0].getNode();
           let vm = childrens[i];
+          if(vm.defaultConfig==undefined){
+            continue;
+          }
+          
           let width = vm.width ? vm.width : vm.defaultConfig.width;
           if (i > 0) {
             this.leftDis += width + vm.defaultConfig.x + vm.mgl;
           } else {
             this.leftDis += vm.defaultConfig.x + vm.mgl;
-            // console.log(
-            //   "000000000000////788---",
-            //   i,
-            //   vm.defaultConfig.x,
-            //   vm.mgl
-            // );
           }
           console.log("*/*//", i, this.leftDis);
           vm.updateConfig = {};
@@ -134,33 +131,58 @@ export default {
       this.topDis = 0;
       this.$nextTick(() => {
         let childrens = this.$refs["slot"].$children;
+        // console.log("this.$slots", this.$slots);
+
         for (let i = 0; i < childrens.length; i++) {
-          let dom = childrens[i].$children[0].getNode();
+          //   let dom = childrens[i].$children[0].getNode();
           let vm = childrens[i];
+          if(vm.defaultConfig==undefined){
+            continue;
+          }
+          let preVm = childrens[i - 1];
           //这里拿容器的高？
-          let height = vm.height
-            ? this.$sizeW(vm.height)
-            : vm.defaultConfig.height;
+          let height = 0;
+          console.log(this.name, i, "preVm", preVm, preVm ? preVm.height : 0);
+          if (preVm) {
+            height=preVm.height
+              ? this.$sizeW(preVm.height)
+              : preVm.defaultConfig.height;
+          } else {
+            height = 0;
+          }
           let mgt = vm.mgt ? vm.mgt : 0;
+            console.log(
+              this.name,
+              "before-update",
+              i,
+              "y:",
+              vm.defaultConfig.y,
+              "x:",
+              vm.defaultConfig.x,
+              "height:",
+              vm.defaultConfig.height,
+              "mgt",
+              vm.mgt,
+              "topDis",
+              this.topDis
+            );
+          
+
           if (i > 0) {
             this.topDis += height + vm.defaultConfig.y + mgt;
+            console.log(
+              this.name,
+              "index more than 0",
+              height,
+              vm.defaultConfig.y,
+              mgt
+            );
           } else {
             this.topDis += vm.defaultConfig.y + mgt;
+            console.log(this.name, "zero:", height, vm.defaultConfig.y, mgt);
           }
-          console.log(
-            this.name,
-            "before-update",
-            i,
-            "y:",
-            vm.defaultConfig.y,
-            "x:",
-            vm.defaultConfig.x,
-            "height:",
-            vm.defaultConfig.height,
-            "mgt",
-            vm.mgt
-          );
-          console.log("*/*//", i, this.topDis);
+
+          console.log(this.name, "y", i, this.topDis);
           vm.updateConfig = {};
           vm.updateConfig = {
             y: this.topDis,
@@ -180,7 +202,9 @@ export default {
             "height:",
             vm.updateConfig.height,
             "mgt",
-            vm.mgt
+            vm.mgt,
+            "topDis",
+            this.topDis
           );
         }
         this.innerHeight = this.topDis;
