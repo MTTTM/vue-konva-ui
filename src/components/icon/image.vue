@@ -297,16 +297,15 @@ export default {
      * 添加蒙版
      */
     mask(me, canvas) {
-      //  me.context.globalCompositeOperation = "source-atop";
       //debuger状态显示边框
       if (me.debuger) {
-        me.context.save();
         me.context.strokeStyle = "#ff0000";
         me.context.strokeRect(0, 0, me.w, me.h);
         me.context.restore();
       }
       if (me.color) {
         me.context.save();
+        me.context.globalCompositeOperation = "source-atop";
         me.context.fillStyle = me.color;
         me.context.fillRect(0, 0, me.w, me.h);
         me.context.restore();
