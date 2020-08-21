@@ -159,10 +159,8 @@ export default {
       this.topDis = 0;
       this.$nextTick(() => {
         let childrens = this.$refs["slot"].$children;
-        // console.log("this.$slots", this.$slots);
-
+        let mgt=this.endMgt;
         for (let i = 0; i < childrens.length; i++) {
-          //   let dom = childrens[i].$children[0].getNode();
           let vm = childrens[i];
           if(vm.defaultConfig==undefined){
             continue;
@@ -170,7 +168,6 @@ export default {
           let preVm = childrens[i - 1];
           //这里拿容器的高？
           let height = 0;
-          console.log(this.name, i, "preVm", preVm, preVm ? preVm.height : 0);
           if (preVm) {
             height=preVm.height
               ? preVm.height
@@ -178,7 +175,8 @@ export default {
           } else {
             height = 0;
           }
-          let mgt = vm.endMgt ? vm.endMgt : 0;
+          //拿到当前元素的endMgt
+           mgt = vm.endMgt ? vm.endMgt : 0;
             console.log(
               this.name,
               "before-update",
@@ -214,9 +212,11 @@ export default {
           vm.updateConfig = {};
           vm.updateConfig = {
             y: this.topDis,
+            x:vm.endMgl
           };
           vm.updateTextConfig = {
             y: this.topDis,
+             x:vm.endMgl
           };
 
           console.log(

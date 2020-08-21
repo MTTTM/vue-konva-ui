@@ -20,7 +20,7 @@
         </linear-layout> 
 
 
-         <linear-layout flexDir="column" name="layout11" :mgt="10" :height="200" :width="100" key="1">
+         <linear-layout flexDir="column" name="layout11" :mgt="10" :height="206" :width="100" key="1">
             <template v-for="(item,index) in [11,12,13,14]">
               <kButton type="info" :mgl="10" :mgt="index>0?10:0" :text="item" :key="item"></kButton>
             </template>
@@ -28,12 +28,12 @@
 
          <linear-layout  name="layout10" :mgt="10" :height="216" :key="3" debugerColor="red">
            
-          <linear-layout flexDir="column" name="layout11" :mgt="10" :height="180" :width="100" key="1">
+          <linear-layout flexDir="column" name="layout11" :mgt="10" :height="180" :width="100" >
             <template v-for="(item,index) in [11,12,13,14]">
               <kButton type="info" :mgl="10" :mgt="index>0?10:0" :text="item" :key="item"></kButton>
             </template>
           </linear-layout>
-         <linear-layout flexDir="column" name="layout11" :mgt="10" :height="180" :width="100" key="1">
+         <linear-layout flexDir="column" name="layout11" :mgt="10" :mgl="10" :height="180" :width="100" >
             <template v-for="(item,index) in [11,12,13,14]">
               <kButton type="info" :mgl="10" :mgt="index>0?10:0" :text="item" :key="item"></kButton>
             </template>
@@ -50,6 +50,22 @@
             </template>
           </linear-layout> 
         </linear-layout> 
+
+
+        <!-- <linear-layout name="layout8" :mgt="10" :height="44" >
+          <template v-for="item in arr">
+            <kButton type="info" :mgl="10" :text="item" :key="item"></kButton>
+          </template>
+        </linear-layout> 
+
+        <linear-layout name="layout8" :mgt="10" :height="44" >
+          <template v-for="item in arr">
+            <kButton type="info" :mgl="10" :text="item" :key="item"></kButton>
+          </template>
+        </linear-layout>  -->
+
+
+        
 
 
       </linear-layout>
