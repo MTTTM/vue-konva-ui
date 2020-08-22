@@ -109,19 +109,6 @@ export default {
       else{
         this.strokeBackgroundColor="green";
       }
-      // this.$refs['react'].getNode().stroke('yellow');
-      // this.$parent.getNode().draw()
-      // console.log("hover");
-      // this.show=!this.show;
-      // if(this.show){
-      //    this.$refs['react'].getNode().hide();
-      // }
-      // else{
-      //    this.$refs['react'].getNode().show();
-      // }
-     
-      // this.$parent.getNode().draw()
-      console.log("点击了容器")
     },
     updateRowLayout() {
       this.leftDis = 0;
@@ -156,7 +143,8 @@ export default {
               "width:",width,
               "vm.mgl",vm.mgl,
               "vm.endMgl",vm.endMgl)
-            this.leftDis += width + vm.defaultConfig.x + vm.endMgl;
+
+            this.leftDis += width + vm.defaultConfig.x + (vm.endMgl?vm.endMgl:0);
              console.log(this.name,
               i,
               "after",
@@ -167,7 +155,7 @@ export default {
               "vm.mgl",vm.mgl,
               "vm.endMgl",vm.endMgl)
           } else {
-            this.leftDis += vm.defaultConfig.x + vm.endMgl;
+            this.leftDis += vm.defaultConfig.x + (vm.endMgl?vm.endMgl:0);
             console.log(this.name,
               i,
               "this.leftDis",

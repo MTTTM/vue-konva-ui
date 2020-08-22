@@ -1,7 +1,7 @@
 <template>
   <v-group :config="endConfig">
     <v-rect :config="holidConfig"  v-if="debugerStatus||debugerColor" />
-    <v-text :config="endConfig" @click="mouseoverfun"/>
+    <v-text :config="textConfig" @click="mouseoverfun"/>
   </v-group>
 </template>
 <script>
@@ -17,37 +17,18 @@ export default {
     };
   },
   computed: {
-    
-    //实际样式
-    endConfig() {
-      let computedLayout = {};
-      for (let k in this.config) {
-        if (!isNaN(Number(this.config[k]))) {
-          computedLayout[k] = sizeW(this.config[k]);
-        } else {
-          computedLayout[k] = this.config[k];
-        }
+      textConfig(){
+          //group标签内，的元素 x,y永远为0
+          let obj = Object.assign(
+                {},
+                this.defaultConfig,
+                this.config,
+                this.updateConfig,
+                {x:this.defaultConfig.x,y:this.defaultConfig.y},
+            );
+            console.log("obj????",obj)
+            return obj;
       }
-
-      let obj = Object.assign(
-        {},
-        this.defaultConfig,
-        this.config,
-        computedLayout, //适配后的尺寸
-        this.updateConfig
-      );
-      return obj;
-    },
-    holidConfig() {
-      return {
-        x: 0,
-        y: 0,
-        width: this.endConfig.width,
-        height: this.endConfig.height,
-        stroke: this.strokeBackgroundColor,
-        strokeWidth: 1,
-      };
-    },
   },
   created() {
     //console.log("按钮组件", this.$VAL);
