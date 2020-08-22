@@ -136,15 +136,48 @@ export default {
           if(vm.defaultConfig==undefined){
             continue;
           }
-          
-          let width = vm.endWidth ? vm.endWidth : vm.defaultConfig.width;
+          // //拿到前一个容器的宽度
+          let preVm = childrens[i - 1];
+          let width = 0;
+          if (preVm&&preVm.defaultConfig) {
+            width=preVm.endWidth
+              ? preVm.endWidth
+              : preVm.defaultConfig.width;
+          } else {
+            width = 0;
+          }
           if (i > 0) {
+             console.log(this.name,
+             "before",
+              i,
+              "this.leftDis",
+              this.leftDis,
+              "vm.defaultConfig.x",vm.defaultConfig.x ,
+              "width:",width,
+              "vm.mgl",vm.mgl,
+              "vm.endMgl",vm.endMgl)
             this.leftDis += width + vm.defaultConfig.x + vm.endMgl;
+             console.log(this.name,
+              i,
+              "after",
+              "this.leftDis",
+              this.leftDis,
+              "vm.defaultConfig.x",vm.defaultConfig.x ,
+              "width:",width,
+              "vm.mgl",vm.mgl,
+              "vm.endMgl",vm.endMgl)
           } else {
             this.leftDis += vm.defaultConfig.x + vm.endMgl;
-            console.log(this.name,"this.leftDis",this.leftDis,"vm.defaultConfig.x",vm.defaultConfig.x ,"vm.endMgl",vm.endMgl)
+            console.log(this.name,
+              i,
+              "this.leftDis",
+              this.leftDis,
+              "vm.defaultConfig.x",vm.defaultConfig.x ,
+              "width:",width,
+              "vm.mgl",vm.mgl,
+              "vm.endMgl",vm.endMgl)
           }
-          console.log("*/*//", i, this.leftDis);
+        
           vm.updateConfig = {};
           vm.updateConfig = {
             x: this.leftDis,
@@ -171,7 +204,7 @@ export default {
             continue;
           }
           let preVm = childrens[i - 1];
-          //这里拿容器的高？
+          //拿到前一个容器的高度
           let height = 0;
           if (preVm&&preVm.defaultConfig) {
             height=preVm.height
