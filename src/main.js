@@ -8,7 +8,7 @@ import LinearLayout from "./components/linearLayout/linearLayout"
 import ScrollView from "./components/scrollView/index"
 import kButton from "./components/button/index"
 import kIcon from "./components/icon/image"
-
+import kText from "./components/text/text.vue"
 import GLOBALColor from "./components/var.js"
 import {sizeW,sizeH} from "./utils/size"
 console.log("sizeW,sizeH",sizeW,sizeH)
@@ -19,6 +19,7 @@ Vue.component('linear-layout', LinearLayout)
 Vue.component('scroll-view', ScrollView)
 Vue.component('k-button', kButton)
 Vue.component('k-icon', kIcon)
+Vue.component("k-text",kText);
 Vue.config.productionTip = false
 Vue.prototype.$VAL=GLOBALColor;
 Vue.prototype.$DEBUGER=true;

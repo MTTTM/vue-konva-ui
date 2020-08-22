@@ -54,6 +54,11 @@ Vue.use(VueRouter)
     path: '/linearLayout2',
     name: 'linearLayout2',
     component: () => import(/* webpackChunkName: "about" */ '../views/pages/linearLayout2.vue')
+  },
+  {
+    path: '/text',
+    name: 'text',
+    component: () => import(/* webpackChunkName: "about" */ '../views/pages/text.vue')
   }
 ]
 
