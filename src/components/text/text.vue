@@ -21,10 +21,11 @@ export default {
           //group标签内，的元素 x,y永远为0
           let obj = Object.assign(
                 {},
-                this.defaultConfig,
+                
                 this.config,
+                this.defaultConfig,
                 this.updateConfig,
-                {x:this.defaultConfig.x,y:this.defaultConfig.y},
+                {x:0,y:0},
             );
             console.log("obj????",obj)
             return obj;

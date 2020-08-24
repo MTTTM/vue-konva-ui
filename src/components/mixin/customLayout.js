@@ -36,7 +36,6 @@ export default {
            console.log("computedLayout",computedLayout) 
          //单位转换后的配置   
         this.defaultConfig =Object.assign({},this.defaultConfig,computedLayout);
-      //  console.log("this.defaultConfig.x",this.defaultConfig.x,!this.defaultConfig.x)
         if(!this.defaultConfig.x){
             this.defaultConfig.x=0;
         }
@@ -52,8 +51,8 @@ export default {
         endConfig() {
             let obj = Object.assign(
                 {},
-                this.defaultConfig,
                 this.config,
+                this.defaultConfig,
                 this.updateConfig
             );
             return obj;
@@ -69,8 +68,8 @@ export default {
             return {
                 x: 0,//group内部元素的x，永远是0
                 y: 0,//group内部元素的y，永远是0
-                width: this.endConfig.width,
-                height: this.endConfig.height,
+                width: this.endWidth,
+                height: this.endHeight,
                 stroke: this.strokeBackgroundColor,
                 strokeWidth: 1,
             };
@@ -85,7 +84,7 @@ export default {
         },
         endWidth() {
             //计算后的width
-            return this.defaultConfig.width;
+            return this.defaultConfig.width?this.defaultConfig.width:0;
         },
         endHeight() {
             //计算后的高

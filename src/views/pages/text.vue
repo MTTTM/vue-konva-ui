@@ -1,7 +1,7 @@
 <template>
   <v-stage :config="configKonva">
     <v-layer ref="layer" >
-      <linear-layout  name="layout11" flexDir="column" :width="600" :height="400" debugerColor="yellow">
+      <linear-layout  name="layout11" flexDir="column" :width="800" :height="400" debugerColor="yellow">
            <linear-layout name="layout021" flexDir="row"   debugerColor="black">
                 <k-icon 
                       :config='{
@@ -10,8 +10,10 @@
                           image:require("../../assets/icons/2.png"),
                           width: 106,
                           height: 118,
-                          resizeMode:"contain"
+                          resizeMode:"contain",
+
                       }'
+                      :debuger="true"
                       />
                 <k-text :config="config" />
           </linear-layout>
@@ -83,19 +85,20 @@ export default {
         y: 0,
         text:
           "COMPLEX TEXT All the world's a stage, and all the men and women merely players. They have their exits and their entrances.",
-        fontSize: 18,
-        fontFamily: "Calibri",
+        fontSize: 10,
         fill: "black",
         width: 300,
         height: 44,
-        padding: 10,
+        padding: 0,
         align: "left",
+        ellipsis: true,
+        wrap: "none",
         ellipsis: true,
         wrap: "none",
       },
       config: {
-        x: 10,
-        y: 10,
+        x: 0,
+        y: 0,
         text:
           "COMPLEX TEXT All the world's a stage, and all the men and women merely players. They have their exits and their entrances.",
         fontSize: 18,
@@ -106,7 +109,7 @@ export default {
         padding: 10,
         align: "left",
         ellipsis: true,
-        //wrap: "none",
+        wrap: "none",
       },
     };
   },

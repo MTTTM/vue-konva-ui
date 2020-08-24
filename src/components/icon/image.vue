@@ -320,14 +320,14 @@ export default {
       //debuger状态显示边框
       if (me.debuger) {
         me.context.strokeStyle = "#ff0000";
-        me.context.strokeRect(0, 0, me.w, me.endConfig.height);
+        me.context.strokeRect(0, 0, me.endConfig.width, me.endConfig.height);
         me.context.restore();
       }
       if (me.color) {
         me.context.save();
         me.context.globalCompositeOperation = "source-atop";
-        me.context.fillStyle = me.color;
-        me.context.fillRect(0, 0, me.w, me.endConfig.height);
+        me.context.fillStyle = "red";
+        me.context.fillRect(0, 0, me.endConfig.width, me.endConfig.height);
         me.context.restore();
       }
 

@@ -1,6 +1,6 @@
 <template>
   <v-group :config="endConfig">
-    <v-rect :config="holidConfig" @click="mouseoverfun" v-if="debugerStatus||debugerColor" />
+    <v-rect :config="holidConfig" @click="mouseoverfun" @tap="mouseoverfun" v-if="debugerStatus||debugerColor" />
     <v-group ref="slot">
       <slot></slot>
     </v-group>
@@ -115,6 +115,11 @@ export default {
       } else {
         this.strokeBackgroundColor = "green";
       }
+      let obj={
+        config:this.config,
+        endCofig:this.endCofig
+      }
+      console.log(this.name,"debuger",obj)
     },
     updateRowLayout() {
       this.leftDis = 0;
