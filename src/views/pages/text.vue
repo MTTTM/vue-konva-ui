@@ -1,8 +1,8 @@
 <template>
   <v-stage :config="configKonva">
-    <v-layer ref="layer">
-      <linear-layout flexDir="column" name="layout11" :height="600">
-           <linear-layout name="layout11" :width="310" :height="200">
+    <v-layer ref="layer" >
+      <linear-layout  name="layout11" :width="600" :height="400" debugerColor="yellow">
+           <linear-layout name="layout021" flexDir="column"   debugerColor="black">
                 <k-icon 
                       :config='{
                           x: 0,
@@ -16,7 +16,7 @@
                 <k-text :config="config" />
           </linear-layout>
 
-          <linear-layout flexDir="column" :width="310" :height="200">
+          <!-- <linear-layout flexDir="column" :width="310" :height="200">
                 <k-icon 
                       :config='{
                           x: 0,
@@ -28,7 +28,7 @@
                       }'
                       />
                 <k-text :config="config" />
-          </linear-layout>
+          </linear-layout> -->
         <!-- <linear-layout name="layout11" :height="44">
           <template v-for="item in [1,2]">
             <kButton type="info" :mgl="10" :text="item" :key="item"></kButton>
@@ -67,8 +67,8 @@
   </v-stage>
 </template>
 <script>
-let width = window.outerWidth;
-let height = window.outerHeight;
+const width = window.innerWidth;
+const height = window.innerHeight;
 import kButton from "../../components/button/index";
 export default {
   components: { kButton },

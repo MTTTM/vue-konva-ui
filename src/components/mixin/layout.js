@@ -5,11 +5,11 @@ export default {
     props: {
         width: {
             type: Number,
-            default:()=>800
+            default:()=>0
         },
         height: {
             type: Number,
-            default:()=>800
+            default:()=>0
         },
         x: {
             type: Number,
@@ -23,7 +23,15 @@ export default {
             type: Number,
             default: 0
         },
+        mgb: {
+            type: Number,
+            default: 0
+        },
         mgl: {
+            type: Number,
+            default: 0
+        },
+        mgr: {
             type: Number,
             default: 0
         },
@@ -77,13 +85,20 @@ export default {
             //计算后的margin-left
             return this.$sizeW(this.mgl);
         },
+        endMgl(){
+            //计算后的margin-left
+            return this.$sizeW(this.mgr);
+        },
         endWidth(){
             //计算后的width
-             return this.$sizeW(this.width);
+             let t=this.$sizeW(this.width)?this.$sizeW(this.width):this.boxInnerWidth;
+             console.log("endWidth",t)
+             return t;
+            
         },
         endHeight(){
             //计算后的高
-            return this.$sizeW(this.height);
+            return this.$sizeW(this.height)?this.$sizeW(this.height):this.boxInnerHeight;
         }
     }
 }

@@ -89,7 +89,19 @@ export default {
         },
         endHeight() {
             //计算后的高
-            return this.defaultConfig.height;
+            return this.defaultConfig.height?this.defaultConfig.height:0;
+        },
+        endMgr(){
+            return this.defaultConfig.mgr?this.defaultConfig.mgr:0;
+        },
+        endMgl(){
+            return this.defaultConfig.mgl?this.defaultConfig.mgl:0
+        },
+        endMgt(){
+            return this.defaultConfig.mgt?this.defaultConfig.mgt:0
+        },
+        endMgb(){
+            return this.defaultConfig.mgb?this.defaultConfig.mgb:0
         }
     },
     methods: {

@@ -107,6 +107,7 @@ export default {
           console.log("eeeeeeeeeeeeeeeeeeeeeeeee", e);
         });
     });
+    console.log("img this.paranet",this.$parent)
   },
   mounted() {},
   computed: {
