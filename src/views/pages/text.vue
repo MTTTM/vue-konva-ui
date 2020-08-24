@@ -1,8 +1,8 @@
 <template>
   <v-stage :config="configKonva">
     <v-layer ref="layer" >
-      <linear-layout  name="layout11" :width="600" :height="400" debugerColor="yellow">
-           <linear-layout name="layout021" flexDir="column"   debugerColor="black">
+      <linear-layout  name="layout11" flexDir="column" :width="600" :height="400" debugerColor="yellow">
+           <linear-layout name="layout021" flexDir="row"   debugerColor="black">
                 <k-icon 
                       :config='{
                           x: 0,
@@ -16,7 +16,7 @@
                 <k-text :config="config" />
           </linear-layout>
 
-          <!-- <linear-layout flexDir="column" :width="310" :height="200">
+          <linear-layout  :mgt="10">
                 <k-icon 
                       :config='{
                           x: 0,
@@ -28,7 +28,7 @@
                       }'
                       />
                 <k-text :config="config" />
-          </linear-layout> -->
+          </linear-layout>
         <!-- <linear-layout name="layout11" :height="44">
           <template v-for="item in [1,2]">
             <kButton type="info" :mgl="10" :text="item" :key="item"></kButton>

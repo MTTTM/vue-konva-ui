@@ -227,7 +227,7 @@ export default {
           //拿到前一个容器的高度
           let height = 0;
           if (preVm && preVm.defaultConfig) {
-            height = preVm.height ? preVm.height : preVm.defaultConfig.height;
+            height = preVm.endHeight ? preVm.endHeight : preVm.defaultConfig.height;
           } else {
             height = 0;
           }
