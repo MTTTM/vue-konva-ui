@@ -35,7 +35,7 @@ export default {
             }
            console.log("computedLayout",computedLayout) 
          //单位转换后的配置   
-        this.defaultConfig = {...computedLayout};
+        this.defaultConfig =Object.assign({},this.defaultConfig,computedLayout);
       //  console.log("this.defaultConfig.x",this.defaultConfig.x,!this.defaultConfig.x)
         if(!this.defaultConfig.x){
             this.defaultConfig.x=0;

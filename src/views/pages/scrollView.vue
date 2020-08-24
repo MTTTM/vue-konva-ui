@@ -34,8 +34,3 @@ export default {
   },
 };
 </script>
-<style lang="scss">
-    .konvajs-content{
-        background:blue;
-    }
-</style>

@@ -6,15 +6,19 @@
       <v-stage :config="configKonva" ref="stage">
        <v-layer ref="layer">
          <k-icon 
-                  :image="require('../../assets/icons/2.png')" 
-                  :w="138"
-                  :h="138"
-                  :debuger="true"
-                  :x="20"
-                  :y="40"
                   v-if="selected=='mask'"
                   key="mask"
                   color="red"
+                   :config='{
+                      x: 0,
+                      y: 0,
+                      image:require("../../assets/icons/2.png"),
+                      width: 106,
+                      height: 118,
+                      resizeMode:"contain"
+                   }'
+                   :debuger="true"
+                  
                   />
                  <k-icon 
                   :image="require('../../assets/icons/img2.png')" 
@@ -254,8 +258,3 @@ export default {
   },
 };
 </script>
-<style lang="scss">
-.konvajs-content {
-  background: blue;
-}
-</style>

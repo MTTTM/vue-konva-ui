@@ -156,9 +156,9 @@ export default {
 };
 </script>
 <style lang="scss">
-.konvajs-content {
-  background: blue;
-}
+// .konvajs-content {
+//   background: blue;
+// }
 // @media screen and (orientation:portrait) {
 //  .konvajs-content{
 //      background:red;
