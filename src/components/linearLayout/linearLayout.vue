@@ -38,6 +38,10 @@ export default {
       type: String,
       default: () => "flex-start",
     },
+    alignItems: {
+      type: String,
+      default: () => "flex-start",
+    },
   },
   watch: {
     flexDir(newV) {
@@ -112,22 +116,41 @@ export default {
       };
     },
     slotConfig() {
+      let obj={};
       if (this.flexDir == "row") {
         if (this.justifyContent == "flex-start") {
-          return { x: 0 };
+          obj= { x: 0 };
         } else if (this.justifyContent == "flex-end") {
-          return { x: this.endWidth - this.boxInnerWidth };
+          obj= { x: this.endWidth - this.boxInnerWidth };
         } else if (this.justifyContent == "center") {
-          return { x: (this.endWidth - this.boxInnerWidth) / 2 };
+          obj= { x: (this.endWidth - this.boxInnerWidth) / 2 };
         }
+        //交叉轴
+        if (this.alignItems == "flex-start") {
+          obj=Object.assign(obj,{ y: 0 }) ;
+        } else if (this.alignItems == "flex-end") {
+           obj=Object.assign(obj,{ y: this.endHeight - this.boxInnerHeight }) ;
+        } else if (this.alignItems == "center") {
+          obj=Object.assign(obj,{ y: (this.endHeight - this.boxInnerHeight) / 2 }) ;
+        }
+        return obj;
       } else {
         if (this.justifyContent == "flex-start") {
-          return { y: 0 };
+          obj= { y: 0 };
         } else if (this.justifyContent == "flex-end") {
-          return { y: this.endHeight - this.boxInnerHeight };
+          obj= { y: this.endHeight - this.boxInnerHeight };
         } else if (this.justifyContent == "center") {
-          return { y: (this.endHeight - this.boxInnerHeight) / 2 };
+          obj= { y: (this.endHeight - this.boxInnerHeight) / 2 };
         }
+        //交叉轴
+        if (this.alignItems == "flex-start") {
+          obj=Object.assign(obj,{ x: 0 }) ;
+        } else if (this.alignItems == "flex-end") {
+          obj=Object.assign(obj,{ x: this.endWidth - this.boxInnerWidth-this.endMgl-this.endMgr }) ;
+        } else if (this.alignItems == "center") {
+           obj=Object.assign(obj,{ x: (this.endWidth - this.boxInnerWidth-this.endMgl-this.endMgr) / 2 }) ;
+        }
+        return obj;
       }
     },
   },
@@ -424,8 +447,8 @@ export default {
         console.log(this.name, "updateColBoxHeight rukou");
         this.updateColBoxHeight(i, item, len);
       }
-    },
-    //获取子组件
+    }
+
   },
 };
 </script>

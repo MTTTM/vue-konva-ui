@@ -1,16 +1,29 @@
 <template>
   <div>
-    <div style="position:fixed;right:0;
-   bottom:0;z-index:1000;">
+  <div style="position:fixed;right:0;
+   bottom:0;z-index:1000;background:#fff;">
+       <div>justifyContent</div>
       <button @click="()=>{justifyContent='flex-start';reverse=false}">flex-start</button>
       <button @click="()=>{justifyContent='flex-end';reverse=false}">flex-end</button>
       <button @click="()=>{justifyContent='center';reverse=false}">center</button>
-      <button @click="()=>{justifyContent='space-between';reverse=false}">space-between</button>
-       <button @click="()=>{justifyContent='space-around';reverse=false}">space-around</button>
+      <!-- <button @click="()=>{justifyContent='space-between';reverse=false}">space-between</button>
+      <button @click="()=>{justifyContent='space-around';reverse=false}">space-around</button> -->
+      <br />
+      <div>alignItems</div>
+       <button @click="()=>{alignItems='flex-start';reverse=false}">flex-start</button>
+      <button @click="()=>{alignItems='flex-end';reverse=false}">flex-end</button>
+      <button @click="()=>{alignItems='center';reverse=false}">center</button>
     </div>
     <v-stage :config="configKonva">
       <v-layer ref="layer">
-        <linear-layout name="layout2" v-if="show" flexDir="column" :justifyContent="justifyContent"  :mgt="10" :height="800" :width="1000">
+        <linear-layout
+         name="layout2"
+          v-if="show"
+           flexDir="column" 
+        :justifyContent="justifyContent"  
+        :alignItems="alignItems"
+        :height="600" 
+        :width="600">
           <template v-for="item in arr">
             <kButton type="info" :config="{mgl:10,mgt:10}" :text="item" :key="item"></kButton>
           </template>
@@ -27,6 +40,7 @@ export default {
   components: { kButton },
   data() {
     return {
+      alignItems: "flex-start",
      justifyContent:"flex-start",
       configKonva: {
         width: width,
