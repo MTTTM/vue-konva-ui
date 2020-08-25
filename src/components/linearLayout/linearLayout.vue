@@ -18,21 +18,6 @@ export default {
         return "row"; // row column
       },
     },
-    // width: {
-    //   type: Number,
-    // },
-    // height: {
-    //   type: Number,
-    //   required: true,
-    // },
-    // mgt: {
-    //   type: Number,
-    //   default: 0,
-    // },
-    // mgl: {
-    //   type: Number,
-    //   default: 0,
-    // },
     name: {
       type: String,
     },

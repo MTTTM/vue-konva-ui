@@ -1,0 +1,14 @@
+*{
+    margin:0;
+    padding:0;
+}
+.box{
+    width: 600px;
+    border:1px solid red;
+    display: flex;
+}
+.item{
+    width: 200px;
+    height: 200px;
+    border:1px solid green;
+}

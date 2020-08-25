@@ -12,7 +12,7 @@
 </template>
 <script>
 import Var from "../var";
-import LayoutMixins from "../mixin/layout";
+import LayoutMixins from "../mixin/customLayout.js";
 import {sizeW,sizeH} from "../../utils/size"
 export default {
   name: "kButton",
@@ -101,12 +101,12 @@ export default {
       let computedLayout = {
         x: this.endX,
         y: this.endY,
-        // mgt:this.endMgt,
-        // mgl:this.endMgl,
         width: this.endWidth,
         height: this.endHeight,
+        mgl:this.endMgl,
+        mgr:this.endMgr
       };
-      console.log("computedLayout",this.width,this.$sizeW(this.width))
+    //  console.log("computedLayout",this.width,this.$sizeW(this.width))
       let obj = Object.assign(
         {},
         this.defaultConfig,

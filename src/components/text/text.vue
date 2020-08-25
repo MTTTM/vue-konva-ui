@@ -1,7 +1,7 @@
 <template>
   <v-group :config="endConfig">
     <v-rect :config="holidConfig"  v-if="debugerStatus||debugerColor" />
-    <v-text :config="textConfig" @click="mouseoverfun"/>
+    <v-text :config="textConfig" @click="mouseoverfun"  @tap="mouseoverfun"/>
   </v-group>
 </template>
 <script>

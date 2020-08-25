@@ -1,9 +1,9 @@
 <template>
   <v-stage :config="configKonva">
        <v-layer ref="layer">
-           <linear-layout ref="linearLayout">
+           <linear-layout ref="linearLayout" name="button">
              <template v-for="item in arr">
-                 <kButton type="info" :mgl="10" :text="item" :key="item"></kButton>
+                 <kButton type="info" :config="{mgl:10}" :text="item" :key="item"></kButton>
              </template>   
            </linear-layout>
            

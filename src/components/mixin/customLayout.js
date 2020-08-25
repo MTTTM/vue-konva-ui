@@ -33,7 +33,7 @@ export default {
                     computedLayout[k] = this.config[k];
                 }
             }
-           console.log("computedLayout",computedLayout) 
+           console.log(this.name,"computedLayout22",computedLayout,"this.config",this.config) 
          //单位转换后的配置   
         this.defaultConfig =Object.assign({},this.defaultConfig,computedLayout);
         if(!this.defaultConfig.x){
@@ -42,6 +42,8 @@ export default {
         if(!this.defaultConfig.y){
             this.defaultConfig.y=0;
         }
+
+        
     },
     computed: {
         debugerStatus() {

@@ -1,7 +1,7 @@
 <template>
   <v-stage :config="configKonva">
     <v-layer ref="layer" >
-      <linear-layout  name="layout11" flexDir="column" :width="800" :height="400" debugerColor="yellow">
+      <linear-layout  name="layout11" flexDir="column" :width="600" :height="400" debugerColor="yellow">
            <linear-layout name="layout021" flexDir="row"   debugerColor="black">
                 <k-icon 
                       :config='{
@@ -108,8 +108,8 @@ export default {
         height: 100,
         padding: 10,
         align: "left",
-        ellipsis: true,
-        wrap: "none",
+        // ellipsis: true,
+        // wrap: "none",
       },
     };
   },
