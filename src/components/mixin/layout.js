@@ -81,13 +81,13 @@ export default {
             //计算后的margin-top
              return this.$sizeW(this.mgt);
         },
-        endMgl(){
+        endMgr(){
             //计算后的margin-left
-            return this.$sizeW(this.mgl);
+            return this.$sizeW(this.mgr);
         },
         endMgl(){
             //计算后的margin-left
-            return this.$sizeW(this.mgr);
+            return this.$sizeW(this.mgl);
         },
         endWidth(){
             //计算后的width

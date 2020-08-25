@@ -35,7 +35,7 @@ export default {
       defaultConfig: {
         x: 0,
         y: 0,
-        gml: 0,
+        mgl: 0,
         mgt: 0,
         width: document.documentElement.clientWidth,
         height: this.$sizeW(44),
@@ -63,7 +63,7 @@ export default {
         width: this.endWidth,
         height: this.endHeight,
       };
-      console.log(this.name, "computedLayout", computedLayout);
+      console.log(this.name, "computedLayout", computedLayout,"this.endMgt",this.endMgl);
       let obj = Object.assign(
         {},
         this.defaultConfig,
@@ -164,7 +164,7 @@ export default {
               "width:",
               width,
               "vm.mgl",
-              vm.mgl,
+              vm.mgl,"this.$sizeW(mgl)",this.$sizeW(vm.mgl),
               "vm.endMgl",
               vm.endMgl
             );
@@ -173,6 +173,7 @@ export default {
             console.log(
               this.name,
               i,
+              "after",
               "this.leftDis",
               this.leftDis,
               "vm.defaultConfig.x",
