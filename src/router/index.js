@@ -61,6 +61,16 @@ Vue.use(VueRouter)
     component: () => import(/* webpackChunkName: "about" */ '../views/pages/linearLayout3.vue')
   },
   {
+    path: '/linearLayout4',
+    name: 'linearLayout4',
+    component: () => import(/* webpackChunkName: "about" */ '../views/pages/linearLayout4.vue')
+  },
+  {
+    path: '/linearLayout5',
+    name: 'linearLayout5',
+    component: () => import(/* webpackChunkName: "about" */ '../views/pages/linearLayout5.vue')
+  },
+  {
     path: '/text',
     name: 'text',
     component: () => import(/* webpackChunkName: "about" */ '../views/pages/text.vue')

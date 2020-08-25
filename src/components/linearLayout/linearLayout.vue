@@ -6,7 +6,7 @@
       @tap="mouseoverfun"
       v-if="debugerStatus||debugerColor"
     />
-    <v-group ref="slot">
+    <v-group ref="slot" :config="slotConfig">
       <slot></slot>
     </v-group>
   </v-group>
@@ -24,21 +24,25 @@ export default {
       },
     },
     childArr: {
-        default() {
-          return [];
-        },
-     },
+      default() {
+        return [];
+      },
+    },
     name: {
       type: String,
     },
     debugerColor: {
       type: String,
     },
+    justifyContent: {
+      type: String,
+      default: () => "flex-start",
+    },
   },
   watch: {
     flexDir(newV) {
       this.updateChildLayOut();
-    }
+    },
   },
   data() {
     return {
@@ -58,8 +62,8 @@ export default {
       updateConfig: {}, //更新样式用
       strokeBackgroundColor: "black",
       show: 1,
-      boxInnerWidth: 0, //容器宽
-      boxInnerHeight: 0, //容器高
+      boxInnerWidth: 0, //容器内部元素加起来的宽
+      boxInnerHeight: 0, //容器内部元素加起来的高
       maxWidth: 0, //最大宽度
       maxHeight: 0, //最大高度
     };
@@ -107,11 +111,30 @@ export default {
         zIndex: 0,
       };
     },
+    slotConfig() {
+      if (this.flexDir == "row") {
+        if (this.justifyContent == "flex-start") {
+          return { x: 0 };
+        } else if (this.justifyContent == "flex-end") {
+          return { x: this.endWidth - this.boxInnerWidth };
+        } else if (this.justifyContent == "center") {
+          return { x: (this.endWidth - this.boxInnerWidth) / 2 };
+        }
+      } else {
+        if (this.justifyContent == "flex-start") {
+          return { y: 0 };
+        } else if (this.justifyContent == "flex-end") {
+          return { y: this.endHeight - this.boxInnerHeight };
+        } else if (this.justifyContent == "center") {
+          return { y: (this.endHeight - this.boxInnerHeight) / 2 };
+        }
+      }
+    },
   },
   mounted() {
     this.strokeBackgroundColor = this.debugerColor;
     this.updateChildLayOut();
-    console.log("childArr",this.childArr)
+    console.log("childArr", this.childArr);
   },
   methods: {
     mouseoverfun() {
@@ -318,10 +341,12 @@ export default {
       if (i == 0) {
         this.boxInnerWidth = 0;
       }
-      if (this.width) {
-        this.boxInnerWidth = this.endWidth;
-        return;
-      } else if (childrens.length > 0) {
+      //因为计算的是容器内部元素的宽高，所以不使用容器宽
+      // if (this.width) {
+      //   this.boxInnerWidth = this.endWidth;
+      //   return;
+      // } else
+      if (childrens.length > 0) {
         //区分横竖布局
         if (this.flexDir == "row") {
           this.boxInnerWidth +=
@@ -353,11 +378,12 @@ export default {
       }
       console.log(this.name, "updateColBoxHeight1");
       //如果有设置高度
-      if (this.height) {
-        this.boxInnerHeight = this.endHeight;
-        console.log(this.name, "updateColBoxHeight2");
-        return;
-      } else if (childrens.length > 0) {
+      // if (this.height) {
+      //   this.boxInnerHeight = this.endHeight;
+      //   console.log(this.name, "updateColBoxHeight2");
+      //   return;
+      // } else
+      if (childrens.length > 0) {
         this.boxInnerHeight +=
           item.endHeight + item.endY + item.endMgt + item.endMgb;
         console.log(
