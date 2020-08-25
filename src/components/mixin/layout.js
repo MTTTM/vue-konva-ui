@@ -58,6 +58,7 @@ export default {
             updateConfig: {},//更新样式用，给LinearLayout这种布局组件调用
         }
     },
+ 
     computed: {
         //实际样式,
         endConfig() {

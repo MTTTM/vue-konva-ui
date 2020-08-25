@@ -138,22 +138,7 @@ export default {
   created() {
     //console.log("按钮组件", this.$VAL);
   },
-  beforeDestroy() {
-    //  console.log("按钮组件销毁",this.$parent.$parent.componentName)
-    let parent = this.$parent;
-    let i = 0;
-    while (parent) {
-      i++;
-      if (i > 2) {
-        break;
-      }
-      if (parent.componentName == "LinearLayout") {
-        parent.updateChildLayOut();
-        break;
-      }
-      parent = parent.$parent;
-    }
-  },
+
   methods: {
     mouseoverfun() {
       this.defaultConfig.opacity = 0.5;

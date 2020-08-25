@@ -1,6 +1,11 @@
 <template>
   <v-group :config="endConfig">
-    <v-rect :config="holidConfig" @click="mouseoverfun" @tap="mouseoverfun" v-if="debugerStatus||debugerColor" />
+    <v-rect
+      :config="holidConfig"
+      @click="mouseoverfun"
+      @tap="mouseoverfun"
+      v-if="debugerStatus||debugerColor"
+    />
     <v-group ref="slot">
       <slot></slot>
     </v-group>
@@ -18,12 +23,22 @@ export default {
         return "row"; // row column
       },
     },
+    childArr: {
+        default() {
+          return [];
+        },
+     },
     name: {
       type: String,
     },
     debugerColor: {
       type: String,
     },
+  },
+  watch: {
+    flexDir(newV) {
+      this.updateChildLayOut();
+    }
   },
   data() {
     return {
@@ -63,7 +78,13 @@ export default {
         width: this.endWidth,
         height: this.endHeight,
       };
-      console.log(this.name, "computedLayout", computedLayout,"this.endMgt",this.endMgl);
+      console.log(
+        this.name,
+        "computedLayout",
+        computedLayout,
+        "this.endMgt",
+        this.endMgl
+      );
       let obj = Object.assign(
         {},
         this.defaultConfig,
@@ -90,6 +111,7 @@ export default {
   mounted() {
     this.strokeBackgroundColor = this.debugerColor;
     this.updateChildLayOut();
+    console.log("childArr",this.childArr)
   },
   methods: {
     mouseoverfun() {
@@ -100,11 +122,11 @@ export default {
       } else {
         this.strokeBackgroundColor = "green";
       }
-      let obj={
-        config:this.config,
-        endCofig:this.endCofig
-      }
-      console.log(this.name,"debuger",obj)
+      let obj = {
+        config: this.config,
+        endCofig: this.endCofig,
+      };
+      console.log(this.name, "debuger", obj);
     },
     updateRowLayout() {
       this.leftDis = 0;
@@ -113,12 +135,7 @@ export default {
       this.topDis = 0;
       this.$nextTick(() => {
         let childrens = this.$refs["slot"].$children;
-        console.log(
-          this.name,
-          "childrens",
-          childrens,
-          childrens[0].defaultConfig
-        );
+        console.log(this.name, "childrens", childrens);
         for (let i = 0; i < childrens.length; i++) {
           let vm = childrens[i];
           if (vm.defaultConfig == undefined) {
@@ -164,7 +181,9 @@ export default {
               "width:",
               width,
               "vm.mgl",
-              vm.mgl,"this.$sizeW(mgl)",this.$sizeW(vm.mgl),
+              vm.mgl,
+              "this.$sizeW(mgl)",
+              this.$sizeW(vm.mgl),
               "vm.endMgl",
               vm.endMgl
             );
@@ -218,7 +237,9 @@ export default {
           //拿到前一个容器的高度
           let height = 0;
           if (preVm && preVm.defaultConfig) {
-            height = preVm.endHeight ? preVm.endHeight : preVm.defaultConfig.height;
+            height = preVm.endHeight
+              ? preVm.endHeight
+              : preVm.defaultConfig.height;
           } else {
             height = 0;
           }
@@ -303,7 +324,8 @@ export default {
       } else if (childrens.length > 0) {
         //区分横竖布局
         if (this.flexDir == "row") {
-          this.boxInnerWidth +=item.endWidth+ item.endX + item.endMgl + item.endMgr;
+          this.boxInnerWidth +=
+            item.endWidth + item.endX + item.endMgl + item.endMgr;
         } else {
           if (item.endWidth > this.maxWidth) {
             this.maxWidth = item.endWidth;
@@ -377,6 +399,7 @@ export default {
         this.updateColBoxHeight(i, item, len);
       }
     },
+    //获取子组件
   },
 };
 </script>

@@ -2,38 +2,7 @@
   <v-stage :config="configKonva">
     <v-layer ref="layer">
       <linear-layout flexDir="column" name="layout-out" :width="2000" :height="800">
-        <!-- <linear-layout name="layout11" :height="44">
-          <template v-for="item in arr" :width="500">
-            <kButton type="info" :config="{mgl:10}" :text="item" :key="item"></kButton>
-          </template>
-        </linear-layout>
-        <linear-layout name="layout2" :mgt="10" :height="44">
-          <template v-for="item in arr">
-            <kButton type="info" :config="{mgl:10}" :text="item" :key="item"></kButton>
-          </template>
-        </linear-layout>
-
-        <linear-layout name="layout2" :mgt="10" :height="44">
-          <template v-for="item in arr">
-            <kButton type="info" :config="{mgl:10}" :text="item" :key="item"></kButton>
-          </template>
-        </linear-layout>-->
-
-        <!-- <linear-layout
-          flexDir="column"
-          name="layout11"
-          :mgt="10"
-          :mgl="10"
-          :height="206"
-          :width="110"
-        >
-          <template v-for="(item,index) in [11,12,13,14]">
-            <kButton type="info" :config="{mgl:10,mgt:index>0?10:0,text:item}"  :text="item" :key="item"></kButton>
-          </template>
-        </linear-layout>
-        -->
         <!-- 多层嵌套1 ---[ -->
-
         <linear-layout name="layout1000" :mgt="10" :height="300" :key="3" debugerColor="red">
           <linear-layout
             flexDir="column"

@@ -26,24 +26,27 @@ export default {
             this.strokeBackgroundColor = this.debugerColor;
         }
         let computedLayout = {};
-            for (let k in this.config) {
-                if (!isNaN(Number(this.config[k]))) {
-                    computedLayout[k] = this.$sizeW(this.config[k]);
-                } else {
-                    computedLayout[k] = this.config[k];
-                }
+        for (let k in this.config) {
+            if (!isNaN(Number(this.config[k]))) {
+                computedLayout[k] = this.$sizeW(this.config[k]);
+            } else {
+                computedLayout[k] = this.config[k];
             }
-           console.log(this.name,"computedLayout22",computedLayout,"this.config",this.config) 
-         //单位转换后的配置   
-        this.defaultConfig =Object.assign({},this.defaultConfig,computedLayout);
-        if(!this.defaultConfig.x){
-            this.defaultConfig.x=0;
         }
-        if(!this.defaultConfig.y){
-            this.defaultConfig.y=0;
+        console.log(this.name, "computedLayout22", computedLayout, "this.config", this.config)
+        //单位转换后的配置   
+        this.defaultConfig = Object.assign({}, this.defaultConfig, computedLayout);
+        if (!this.defaultConfig.x) {
+            this.defaultConfig.x = 0;
+        }
+        if (!this.defaultConfig.y) {
+            this.defaultConfig.y = 0;
         }
 
-        
+      //  this.emitParentUpdateLayout();
+    },
+    beforeDestroy() {
+        this.emitParentUpdateLayout();
     },
     computed: {
         debugerStatus() {
@@ -60,13 +63,13 @@ export default {
             return obj;
         },
         holidConfig() {
-            let obj={ }
-            for(let k in this.updateConfig){
-                if(k=="width"||k=="height"){
-                    obj[k]=this.updateConfig[k];
+            let obj = {}
+            for (let k in this.updateConfig) {
+                if (k == "width" || k == "height") {
+                    obj[k] = this.updateConfig[k];
                 }
             }
-            
+
             return {
                 x: 0,//group内部元素的x，永远是0
                 y: 0,//group内部元素的y，永远是0
@@ -86,23 +89,23 @@ export default {
         },
         endWidth() {
             //计算后的width
-            return this.defaultConfig.width?this.defaultConfig.width:0;
+            return this.defaultConfig.width ? this.defaultConfig.width : 0;
         },
         endHeight() {
             //计算后的高
-            return this.defaultConfig.height?this.defaultConfig.height:0;
+            return this.defaultConfig.height ? this.defaultConfig.height : 0;
         },
-        endMgr(){
-            return this.defaultConfig.mgr?this.defaultConfig.mgr:0;
+        endMgr() {
+            return this.defaultConfig.mgr ? this.defaultConfig.mgr : 0;
         },
-        endMgl(){
-            return this.defaultConfig.mgl?this.defaultConfig.mgl:0
+        endMgl() {
+            return this.defaultConfig.mgl ? this.defaultConfig.mgl : 0
         },
-        endMgt(){
-            return this.defaultConfig.mgt?this.defaultConfig.mgt:0
+        endMgt() {
+            return this.defaultConfig.mgt ? this.defaultConfig.mgt : 0
         },
-        endMgb(){
-            return this.defaultConfig.mgb?this.defaultConfig.mgb:0
+        endMgb() {
+            return this.defaultConfig.mgb ? this.defaultConfig.mgb : 0
         }
     },
     methods: {
@@ -114,5 +117,20 @@ export default {
                 this.strokeBackgroundColor = "green";
             }
         },
+        emitParentUpdateLayout() {
+            let parent = this.$parent;
+            let i = 0;
+            while (parent) {
+                i++;
+                if (i > 100) {
+                    break;
+                }
+                if (parent.componentName == "LinearLayout") {
+                    parent.updateChildLayOut();
+                    break;
+                }
+                parent = parent.$parent;
+            }
+        }
     },
 }
