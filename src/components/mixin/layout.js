@@ -92,14 +92,14 @@ export default {
         },
         endWidth(){
             //计算后的width
-             let t=this.$sizeW(this.width)?this.$sizeW(this.width):this.boxInnerWidth;
+             let t=this.$sizeW(this.width)?this.$sizeW(this.width):this.computedBoxWidth;
              console.log("endWidth",t)
              return t;
             
         },
         endHeight(){
             //计算后的高
-            return this.$sizeW(this.height)?this.$sizeW(this.height):this.boxInnerHeight;
+            return this.$sizeW(this.height)?this.$sizeW(this.height):this.computedBoxHeight;
         }
     }
 }

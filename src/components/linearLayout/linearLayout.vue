@@ -55,7 +55,7 @@ export default {
     return {
       componentName: "LinearLayout",
       leftDis: 0,
-      innerWidth: 0, //内部内容的宽度,废弃
+      innerWidth: 0, //内部内容的宽度
       topDis: 0,
       innerHeight: 0, //容器的高度
       defaultConfig: {
@@ -69,10 +69,10 @@ export default {
       updateConfig: {}, //更新样式用
       strokeBackgroundColor: "black",
       show: 1,
-      boxInnerWidth: 0, //容器内部元素加起来的宽
-      boxInnerHeight: 0, //容器内部元素加起来的高
-      maxWidth: 0, //最大宽度
-      maxHeight: 0, //最大高度
+      computedBoxWidth: 0, //容器内部元素加起来的宽
+      computedBoxHeight: 0, //容器内部元素加起来的高
+      maxWidth: 0, //最大宽度,临时数据
+      maxHeight: 0, //最大高度，临时数据
     };
   },
   computed: {
@@ -125,18 +125,18 @@ export default {
         if (this.justifyContent == "flex-start") {
           obj = { x: 0 };
         } else if (this.justifyContent == "flex-end") {
-          obj = { x: this.endWidth - this.boxInnerWidth };
+          obj = { x: this.endWidth - this.computedBoxWidth };
         } else if (this.justifyContent == "center") {
-          obj = { x: (this.endWidth - this.boxInnerWidth) / 2 };
+          obj = { x: (this.endWidth - this.computedBoxWidth) / 2 };
         }
         //交叉轴
         if (this.alignItems == "flex-start") {
           obj = Object.assign(obj, { y: 0 });
         } else if (this.alignItems == "flex-end") {
-          obj = Object.assign(obj, { y: this.endHeight - this.boxInnerHeight });
+          obj = Object.assign(obj, { y: this.endHeight - this.computedBoxHeight });
         } else if (this.alignItems == "center") {
           obj = Object.assign(obj, {
-            y: (this.endHeight - this.boxInnerHeight) / 2,
+            y: (this.endHeight - this.computedBoxHeight) / 2,
           });
         }
         return obj;
@@ -144,21 +144,21 @@ export default {
         if (this.justifyContent == "flex-start") {
           obj = { y: 0 };
         } else if (this.justifyContent == "flex-end") {
-          obj = { y: this.endHeight - this.boxInnerHeight };
+          obj = { y: this.endHeight - this.computedBoxHeight };
         } else if (this.justifyContent == "center") {
-          obj = { y: (this.endHeight - this.boxInnerHeight) / 2 };
+          obj = { y: (this.endHeight - this.computedBoxHeight) / 2 };
         }
         //交叉轴
         if (this.alignItems == "flex-start") {
           obj = Object.assign(obj, { x: 0 });
         } else if (this.alignItems == "flex-end") {
           obj = Object.assign(obj, {
-            x: this.endWidth - this.boxInnerWidth - this.endMgl - this.endMgr,
+            x: this.endWidth - this.computedBoxWidth - this.endMgl - this.endMgr,
           });
         } else if (this.alignItems == "center") {
           obj = Object.assign(obj, {
             x:
-              (this.endWidth - this.boxInnerWidth - this.endMgl - this.endMgr) /
+              (this.endWidth - this.computedBoxWidth - this.endMgl - this.endMgr) /
               2,
           });
         }
@@ -171,6 +171,7 @@ export default {
     this.$nextTick(() => {
       //更新容器宽高
       this.updateBoxWidthHeight();
+      console.log("this.innerHeight?????????",this.innerHeight)
       //更新子组件布局
       this.updateChildLayOut();
     });
@@ -200,14 +201,11 @@ export default {
       if (wrapIsSpaceBetween) {
         let lastItem = childrens[childrens.length - 1];
         let fistItem = childrens[0];
-        let len = childrens.length;
+        let len = childrens.length-2;
         betweenMgl =
-          this.endWidth -
-            (fistItem.endWidth + fistItem.endMgl + fistItem.endMgr) -
-            (lastItem.endWidth + lastItem.endMgl + lastItem.endMgr)
-          ;
+          this.endWidth -this.innerWidth;
       
-        if (len <= 2) {
+        if (len < 2) {
           betweenMgl = 0;
         } 
         else {
@@ -225,26 +223,23 @@ export default {
       if (wrapIsSpaceBetween) {
         let lastItem = childrens[childrens.length - 1];
         let fistItem = childrens[0];
-        let len = childrens.length;
-        betweenMgt =
-          this.endHeight -
-            (fistItem.endHeight + fistItem.endMgt + fistItem.endMgb) -
-            (lastItem.endHeight + lastItem.endMgt + lastItem.endMgb)
-          ;
+        let len = childrens.length-2;
+        betweenMgt = this.endHeight -this.innerHeight;
       
-        if (len <= 2) {
+        if (len < 2) {
           betweenMgt = 0;
         } 
         else {
           betweenMgt = betweenMgt / (len+1);
         }
       }
+      console.log("this.innerHeight this.innerHeight",this.innerHeight,this.endHeight, this.endHeight -this.innerHeight,betweenMgt);
       return betweenMgt;
     },
     updateRowLayout() {
       this.leftDis = 0;
-      this.innerWidth = 0;
-      this.innerHeight = 0;
+      // this.innerWidth = 0;
+      // this.innerHeight = 0;
       this.topDis = 0;
       this.$nextTick(() => {
         let childrens = this.$refs["slot"].$children;
@@ -358,11 +353,12 @@ export default {
         this.updateBoxHeight(i, vm, childrens.length); //计算容器高度
       }
     },
+    //col布局，子元素布局
     updateColumnLayout() {
       console.log("LinearLayout", this.$refs["slot"].$children);
       this.leftDis = 0;
-      this.innerWidth = 0;
-      this.innerHeight = 0;
+      // this.innerWidth = 0;
+      // this.innerHeight = 0;
       this.topDis = 0;
       this.$nextTick(() => {
         let childrens = this.$refs["slot"].$children;
@@ -460,7 +456,7 @@ export default {
             this.topDis
           );
         }
-        this.innerHeight = this.topDis;
+       // this.innerHeight = this.topDis;
       });
     },
     //容器内部元素的布局排版
@@ -475,34 +471,35 @@ export default {
     updateBoxWidth(i, item, len) {
       let childrens = this.$refs["slot"].$children;
       if (i == 0) {
-        this.boxInnerWidth = 0;
+        this.computedBoxWidth = 0;
+        this.innerWidth=0;
       }
       //因为计算的是容器内部元素的宽高，所以不使用容器宽
       // if (this.width) {
-      //   this.boxInnerWidth = this.endWidth;
+      //   this.computedBoxWidth = this.endWidth;
       //   return;
       // } else
       if (childrens.length > 0) {
         //区分横竖布局
         if (this.flexDir == "row") {
-          this.boxInnerWidth +=
+          this.innerWidth=this.computedBoxWidth +=
             item.endWidth + item.endX + item.endMgl + item.endMgr;
         } else {
           if (item.endWidth > this.maxWidth) {
             this.maxWidth = item.endWidth;
           }
           if (i == len - 1) {
-            this.boxInnerWidth = this.maxWidth;
+            this.innerWidth=this.computedBoxWidth = this.maxWidth;
           }
         }
       } else {
         if (/vLayer/gi.test(this.$parent.$vnode.tag)) {
-          this.boxInnerWidth = this.$parent.getNode().width();
+          this.computedBoxWidth = this.$parent.getNode().width();
           return;
         } else {
           //获取最近的linearlayout的宽度
           let linearLayout = getParentLinearLayout(this);
-          this.boxInnerWidth = linearLayout.endWidth;
+          this.computedBoxWidth = linearLayout.endWidth;
           return;
         }
       }
@@ -511,34 +508,35 @@ export default {
     updateColBoxHeight(i, item, len) {
       let childrens = this.$refs["slot"].$children;
       if (i == 0) {
-        this.boxInnerHeight = 0;
+        this.computedBoxHeight = 0;
+        this.innerHeight=0;
       }
       console.log(this.name, "updateColBoxHeight1");
       //如果有设置高度
       // if (this.height) {
-      //   this.boxInnerHeight = this.endHeight;
+      //   this.computedBoxHeight = this.endHeight;
       //   console.log(this.name, "updateColBoxHeight2");
       //   return;
       // } else
       if (childrens.length > 0) {
-        this.boxInnerHeight +=
+        this.innerHeight=this.computedBoxHeight +=
           item.endHeight + item.endY + item.endMgt + item.endMgb;
         console.log(
           this.name,
           "updateColBoxHeight3",
-          this.boxInnerHeight,
+          this.computedBoxHeight,
           i,
           item.endHeight
         );
         return;
       } else {
         if (/vLayer/gi.test(this.$parent.$vnode.tag)) {
-          this.boxInnerHeight = this.$parent.getNode().height();
+          this.computedBoxHeight = this.$parent.getNode().height();
           return;
         } else {
           //获取最近的linearlayout的宽度
           let linearLayout = getParentLinearLayout(this);
-          this.boxInnerHeight = linearLayout.endHeight;
+          this.computedBoxHeight = linearLayout.endHeight;
           return;
         }
       }
@@ -550,9 +548,9 @@ export default {
         this.maxHeight = item.endHeight;
       }
       if (i == len - 1) {
-        this.boxInnerHeight = this.maxHeight;
+        this.computedBoxHeight = this.maxHeight;
       }
-      console.log(this.name, "this.boxInnerHeight", this.boxInnerHeight);
+      console.log(this.name, "this.computedBoxHeight", this.computedBoxHeight);
     },
     //计算容器高度 入口
     updateBoxHeight(i, item, len) {
