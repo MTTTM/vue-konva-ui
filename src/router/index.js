@@ -71,6 +71,11 @@ Vue.use(VueRouter)
     component: () => import(/* webpackChunkName: "about" */ '../views/pages/linearLayout5.vue')
   },
   {
+    path: '/linearLayoutBetween',
+    name: 'linearLayoutBetween',
+    component: () => import(/* webpackChunkName: "about" */ '../views/pages/linearLayoutBetween.vue')
+  },
+  {
     path: '/text',
     name: 'text',
     component: () => import(/* webpackChunkName: "about" */ '../views/pages/text.vue')

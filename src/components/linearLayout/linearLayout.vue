@@ -45,6 +45,9 @@ export default {
   },
   watch: {
     flexDir(newV) {
+      //更新容器宽高
+      this.updateBoxWidthHeight();
+      //更新子组件布局
       this.updateChildLayOut();
     },
   },
@@ -52,7 +55,7 @@ export default {
     return {
       componentName: "LinearLayout",
       leftDis: 0,
-      innerWidth: 0, //内部内容的宽度
+      innerWidth: 0, //内部内容的宽度,废弃
       topDis: 0,
       innerHeight: 0, //容器的高度
       defaultConfig: {
@@ -115,40 +118,49 @@ export default {
         zIndex: 0,
       };
     },
+    //内部元素容器布局
     slotConfig() {
-      let obj={};
+      let obj = {};
       if (this.flexDir == "row") {
         if (this.justifyContent == "flex-start") {
-          obj= { x: 0 };
+          obj = { x: 0 };
         } else if (this.justifyContent == "flex-end") {
-          obj= { x: this.endWidth - this.boxInnerWidth };
+          obj = { x: this.endWidth - this.boxInnerWidth };
         } else if (this.justifyContent == "center") {
-          obj= { x: (this.endWidth - this.boxInnerWidth) / 2 };
+          obj = { x: (this.endWidth - this.boxInnerWidth) / 2 };
         }
         //交叉轴
         if (this.alignItems == "flex-start") {
-          obj=Object.assign(obj,{ y: 0 }) ;
+          obj = Object.assign(obj, { y: 0 });
         } else if (this.alignItems == "flex-end") {
-           obj=Object.assign(obj,{ y: this.endHeight - this.boxInnerHeight }) ;
+          obj = Object.assign(obj, { y: this.endHeight - this.boxInnerHeight });
         } else if (this.alignItems == "center") {
-          obj=Object.assign(obj,{ y: (this.endHeight - this.boxInnerHeight) / 2 }) ;
+          obj = Object.assign(obj, {
+            y: (this.endHeight - this.boxInnerHeight) / 2,
+          });
         }
         return obj;
       } else {
         if (this.justifyContent == "flex-start") {
-          obj= { y: 0 };
+          obj = { y: 0 };
         } else if (this.justifyContent == "flex-end") {
-          obj= { y: this.endHeight - this.boxInnerHeight };
+          obj = { y: this.endHeight - this.boxInnerHeight };
         } else if (this.justifyContent == "center") {
-          obj= { y: (this.endHeight - this.boxInnerHeight) / 2 };
+          obj = { y: (this.endHeight - this.boxInnerHeight) / 2 };
         }
         //交叉轴
         if (this.alignItems == "flex-start") {
-          obj=Object.assign(obj,{ x: 0 }) ;
+          obj = Object.assign(obj, { x: 0 });
         } else if (this.alignItems == "flex-end") {
-          obj=Object.assign(obj,{ x: this.endWidth - this.boxInnerWidth-this.endMgl-this.endMgr }) ;
+          obj = Object.assign(obj, {
+            x: this.endWidth - this.boxInnerWidth - this.endMgl - this.endMgr,
+          });
         } else if (this.alignItems == "center") {
-           obj=Object.assign(obj,{ x: (this.endWidth - this.boxInnerWidth-this.endMgl-this.endMgr) / 2 }) ;
+          obj = Object.assign(obj, {
+            x:
+              (this.endWidth - this.boxInnerWidth - this.endMgl - this.endMgr) /
+              2,
+          });
         }
         return obj;
       }
@@ -156,7 +168,12 @@ export default {
   },
   mounted() {
     this.strokeBackgroundColor = this.debugerColor;
-    this.updateChildLayOut();
+    this.$nextTick(() => {
+      //更新容器宽高
+      this.updateBoxWidthHeight();
+      //更新子组件布局
+      this.updateChildLayOut();
+    });
     console.log("childArr", this.childArr);
   },
   methods: {
@@ -174,6 +191,56 @@ export default {
       };
       console.log(this.name, "debuger", obj);
     },
+    /**
+     * 容器 space-between 布局，给子元素补充，平均后的间距
+     */
+    computedSpaceBetWeenPlusMgl(childrens) {
+      let betweenMgl = 0;
+      const wrapIsSpaceBetween = this.justifyContent == "space-between";
+      if (wrapIsSpaceBetween) {
+        let lastItem = childrens[childrens.length - 1];
+        let fistItem = childrens[0];
+        let len = childrens.length;
+        betweenMgl =
+          this.endWidth -
+            (fistItem.endWidth + fistItem.endMgl + fistItem.endMgr) -
+            (lastItem.endWidth + lastItem.endMgl + lastItem.endMgr)
+          ;
+      
+        if (len <= 2) {
+          betweenMgl = 0;
+        } 
+        else {
+          betweenMgl = betweenMgl / (len+1);
+        }
+      }
+      return betweenMgl;
+    },
+    /**
+     * 容器 space-between 布局，给子元素补充，平均后的上间距
+     */
+    computedSpaceBetWeenPlusMgt(childrens) {
+      let betweenMgt = 0;
+      const wrapIsSpaceBetween = this.justifyContent == "space-between";
+      if (wrapIsSpaceBetween) {
+        let lastItem = childrens[childrens.length - 1];
+        let fistItem = childrens[0];
+        let len = childrens.length;
+        betweenMgt =
+          this.endHeight -
+            (fistItem.endHeight + fistItem.endMgt + fistItem.endMgb) -
+            (lastItem.endHeight + lastItem.endMgt + lastItem.endMgb)
+          ;
+      
+        if (len <= 2) {
+          betweenMgt = 0;
+        } 
+        else {
+          betweenMgt = betweenMgt / (len+1);
+        }
+      }
+      return betweenMgt;
+    },
     updateRowLayout() {
       this.leftDis = 0;
       this.innerWidth = 0;
@@ -181,14 +248,25 @@ export default {
       this.topDis = 0;
       this.$nextTick(() => {
         let childrens = this.$refs["slot"].$children;
-        console.log(this.name, "childrens", childrens);
+        //获取space-between应该补充的间隙，已处理无效参数，包括非space-between
+        let betweenMgl = this.computedSpaceBetWeenPlusMgl(childrens);
+
         for (let i = 0; i < childrens.length; i++) {
           let vm = childrens[i];
           if (vm.defaultConfig == undefined) {
             continue;
           }
-          this.updateBoxWidth(i, vm, childrens.length); //计算容器宽度
-          this.updateBoxHeight(i, vm, childrens.length); //计算容器高度
+
+          if (i == childrens.length - 1&&this.justifyContent == "space-between") {
+            let x=this.endWidth-vm.endMgr -vm.endWidth;
+            vm.updateConfig = {
+              x,
+            };
+            vm.updateTextConfig = {
+              x,
+            };
+            continue;
+          }
           // //拿到前一个容器的宽度
           let preVm = childrens[i - 1];
           let width = 0;
@@ -251,6 +329,11 @@ export default {
               vm.endMgl
             );
           }
+          // this.innerWidth = this.leftDis
+          //第一个是贴边的，所以不需要加附加间距
+          if (i > 0&&i!=childrens.length-1) {
+            this.leftDis += betweenMgl;
+          }
 
           vm.updateConfig = {};
           vm.updateConfig = {
@@ -260,8 +343,20 @@ export default {
             x: this.leftDis,
           };
         }
-        this.innerWidth = this.leftDis;
+       
       });
+    },
+    //更正容器款高
+    updateBoxWidthHeight() {
+      let childrens = this.$refs["slot"].$children;
+      for (let i = 0; i < childrens.length; i++) {
+        let vm = childrens[i];
+        if (vm.defaultConfig == undefined) {
+          continue;
+        }
+        this.updateBoxWidth(i, vm, childrens.length); //计算容器宽度
+        this.updateBoxHeight(i, vm, childrens.length); //计算容器高度
+      }
     },
     updateColumnLayout() {
       console.log("LinearLayout", this.$refs["slot"].$children);
@@ -271,14 +366,26 @@ export default {
       this.topDis = 0;
       this.$nextTick(() => {
         let childrens = this.$refs["slot"].$children;
+        //获取space-between应该补充的间隙，已处理无效参数，包括非space-between
+        let betweenMgt = this.computedSpaceBetWeenPlusMgt(childrens);
         let mgt = this.endMgt;
         for (let i = 0; i < childrens.length; i++) {
           let vm = childrens[i];
           if (vm.defaultConfig == undefined) {
             continue;
           }
-          this.updateBoxWidth(i, vm, childrens.length); //计算容器宽度
-          this.updateBoxHeight(i, vm, childrens.length); //计算容器高度
+          if (i == childrens.length - 1&&this.justifyContent == "space-between") {
+            let y=this.endHeight-vm.endMgb -vm.endHeight;
+            vm.updateConfig = {
+              y,
+            };
+            vm.updateTextConfig = {
+              y,
+            };
+            continue;
+          }
+          // this.updateBoxWidth(i, vm, childrens.length); //计算容器宽度
+          // this.updateBoxHeight(i, vm, childrens.length); //计算容器高度
           let preVm = childrens[i - 1];
           //拿到前一个容器的高度
           let height = 0;
@@ -322,6 +429,11 @@ export default {
           }
 
           console.log(this.name, "y", i, this.topDis);
+
+          //第一个是贴边的，所以不需要加附加间距
+          if (i > 0&&i!=childrens.length-1) {
+            this.topDis += betweenMgt;
+          }
           vm.updateConfig = {};
           vm.updateConfig = {
             y: this.topDis,
@@ -351,9 +463,10 @@ export default {
         this.innerHeight = this.topDis;
       });
     },
+    //容器内部元素的布局排版
     updateChildLayOut() {
       if (this.flexDir == "column") {
-        this.updateColumnLayout();
+          this.updateColumnLayout();
       } else {
         this.updateRowLayout();
       }
@@ -394,6 +507,7 @@ export default {
         }
       }
     },
+    //计算纵向容器的高度
     updateColBoxHeight(i, item, len) {
       let childrens = this.$refs["slot"].$children;
       if (i == 0) {
@@ -440,6 +554,7 @@ export default {
       }
       console.log(this.name, "this.boxInnerHeight", this.boxInnerHeight);
     },
+    //计算容器高度 入口
     updateBoxHeight(i, item, len) {
       if (this.flexDir == "row") {
         this.updateRowBoxHeight(i, item, len);
@@ -447,8 +562,7 @@ export default {
         console.log(this.name, "updateColBoxHeight rukou");
         this.updateColBoxHeight(i, item, len);
       }
-    }
-
+    },
   },
 };
 </script>
