@@ -2,10 +2,10 @@
   <div>
     <div style="position:fixed;right:0;
    bottom:0;z-index:1000;">
-      <button @click="()=>{flexDir='column';reverse=false}">切换纵向布局</button>
-      <button @click="()=>{flexDir='row';reverse=false}">切换横向布局</button>
-      <button @click="()=>{flexDir='column-reverse';reverse=true}">反纵向布局</button>
-      <button @click="()=>{flexDir='row-reverse';reverse=true}">反横向布局</button>
+      <button @click="()=>{flexDir='column';reverse=!reverse}">切换纵向布局</button>
+      <button @click="()=>{flexDir='row';reverse=!reverse}">切换横向布局</button>
+      <button @click="()=>{flexDir='column';reverse=!reverse}">反纵向布局</button>
+      <button @click="()=>{flexDir='row';reverse=!reverse}">反横向布局</button>
     </div>
     <v-stage :config="configKonva">
       <v-layer ref="layer">
