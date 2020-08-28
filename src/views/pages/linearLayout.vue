@@ -26,12 +26,12 @@ export default {
     };
   },
   mounted(){
-    this.$nextTick(()=>{
-        document.onclick=()=>{
-           this.arr.splice(0,1);
-          //  console.log("this.$parents",this.$parent)
-        }
-    })
+    // this.$nextTick(()=>{
+    //     document.onclick=()=>{
+    //        this.arr.splice(0,1);
+    //       //  console.log("this.$parents",this.$parent)
+    //     }
+    // })
   }
 };
 </script>

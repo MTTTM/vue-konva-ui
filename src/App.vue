@@ -8,6 +8,9 @@
       <router-link to="/linearlayout4">alignItems</router-link>
       <router-link to="/linearlayout5">row  alignItems</router-link>
       <router-link to="/linearLayoutBetween">linearLayoutBetween</router-link>
+       <router-link to="/linearLayoutRowBetween">linearLayoutRowBetween</router-link>
+        <router-link to="/linearLayoutColSpaceAround">linearLayoutColSpaceAround</router-link>
+         <router-link to="/linearLayoutSpaceAround">linearLayoutSpaceAround</router-link>
       <router-link to="/linearLayoutWrap">column linearLayoutWrap</router-link>
        <router-link to="/linearLayoutWrap2">row linearLayoutWrap2</router-link>
     </div>

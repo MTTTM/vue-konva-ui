@@ -76,6 +76,21 @@ Vue.use(VueRouter)
     component: () => import(/* webpackChunkName: "about" */ '../views/pages/linearLayoutBetween.vue')
   },
   {
+    path: '/linearLayoutRowBetween',
+    name: 'linearLayoutRowBetween',
+    component: () => import(/* webpackChunkName: "about" */ '../views/pages/linearLayoutRowBetween.vue')
+  },
+  {
+    path: '/linearLayoutSpaceAround',
+    name: 'linearLayoutSpaceAround',
+    component: () => import(/* webpackChunkName: "about" */ '../views/pages/linearLayoutSpaceAround.vue')
+  },
+  {
+    path: '/linearLayoutColSpaceAround',
+    name: 'linearLayoutColSpaceAround',
+    component: () => import(/* webpackChunkName: "about" */ '../views/pages/linearLayoutColSpaceAround.vue')
+  },
+  {
     path: '/linearLayoutWrap',
     name: 'linearLayoutWrap',
     component: () => import(/* webpackChunkName: "about" */ '../views/pages/linearLayoutWrap.vue')

@@ -1,18 +1,16 @@
 <template>
   <v-stage :config="configKonva">
     <v-layer ref="layer">
-      <linear-layout flexDir="column" name="layout-out" :width="2000" :height="800">
-        <!-- 多层嵌套1 ---[ -->
-        <linear-layout name="layout1000" :mgt="10" :height="300" :key="3" debugerColor="red">
-          <linear-layout
-            flexDir="column"
+        <linear-layout
             name="layout11"
-            :mgt="10"
           >
             <template v-for="(item,index) in [11,12,13,14]">
-              <kButton type="info" :config="{mgt:index>0?10:0}" :text="item" :key="item"></kButton>
+              <kButton type="info" :config="{mgl:index>0?10:0}" :text="item" :key="item"></kButton>
             </template>
           </linear-layout>
+      <!-- <linear-layout flexDir="column" name="layout-out" :width="2000" :height="800">
+        <linear-layout name="layout1000" :mgt="10" :height="300" :key="3" debugerColor="red">
+        
 
           <linear-layout
             flexDir="column"
@@ -36,10 +34,8 @@
               <kButton type="primary" :config="{mgt:index>0?10:0}" :text="item" :key="item"></kButton>
             </template>
           </linear-layout>
-          <!-- 常见左图，右文字布局 】-->
         </linear-layout>
-        <!-- 多层嵌套1 ---] -->
-      </linear-layout>
+      </linear-layout> -->
     </v-layer>
   </v-stage>
 </template>

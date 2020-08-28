@@ -40,7 +40,7 @@ export default {
           betweenMgt = betweenMgt / (len + 1);
         }
       }
-      console.log("this.innerHeight this.innerHeight", this.innerHeight, this.endHeight, this.endHeight - this.innerHeight, betweenMgt);
+      console.log("this.innerHeight this.innerHeight *-*", this.innerHeight, this.endHeight, this.endHeight - this.innerHeight, betweenMgt);
       return betweenMgt;
     },
   },
