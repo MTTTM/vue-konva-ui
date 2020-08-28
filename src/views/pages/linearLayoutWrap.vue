@@ -41,7 +41,8 @@
       <linear-layout
         name="layoue003"
         :flexWrap="true"
-        flexDir="column"
+        alignItems="center"
+        flexDir="row"
         :height="600"
         :width="900"
         key="5"

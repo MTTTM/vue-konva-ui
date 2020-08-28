@@ -77,6 +77,7 @@ export default {
       maxWidth: 0, //最大宽度,临时数据
       maxHeight: 0, //最大高度，临时数据
       line: 1, //计算行数||列数
+      rows: [], //一个二维数组格式[[行1列1，行一列二],[]]，line》1才有效
     };
   },
   computed: {
@@ -142,8 +143,9 @@ export default {
           });
         } else if (this.alignItems == "center") {
           obj = Object.assign(obj, {
-            y: (this.endHeight - this.computedBoxHeight) / 2,
+            y: (this.computedBoxHeight - this.innerHeight) / 2,
           });
+          console.log("this.computedBoxHeight - this.innerHeight",this.computedBoxHeight, this.innerHeight)
         }
         return obj;
       } else {
@@ -163,13 +165,16 @@ export default {
               this.endWidth - this.computedBoxWidth - this.endMgl - this.endMgr,
           });
         } else if (this.alignItems == "center") {
+          // obj = Object.assign(obj, {
+          //   x:
+          //     (this.endWidth -
+          //       this.computedBoxWidth -
+          //       this.endMgl -
+          //       this.endMgr) /
+          //     2,
+          // });
           obj = Object.assign(obj, {
-            x:
-              (this.endWidth -
-                this.computedBoxWidth -
-                this.endMgl -
-                this.endMgr) /
-              2,
+            x: (this.computedBoxWidth - this.innerWidth) / 2,
           });
         }
         return obj;
@@ -205,6 +210,7 @@ export default {
     updateRowLayout() {
       this.leftDis = 0;
       this.topDis = 0;
+      this.line=0;
       this.$nextTick(() => {
         let childrens = this.$refs["slot"].$children;
         //获取space-between应该补充的间隙，已处理无效参数，包括非space-between
@@ -331,6 +337,20 @@ export default {
               this.leftDis += betweenMgl * 2;
             }
           }
+          
+            //换行
+          if (this.flexWrap) {
+            if (
+              this.leftDis + vm.endWidth + vm.endMgl + vm.endMgr >
+              this.computedBoxWidth
+            ) {
+              this.leftDis = vm.defaultConfig.x + (vm.endMgl ? vm.endMgl : 0);
+
+              this.topDis +=
+                height + vm.defaultConfig.y + (vm.endMgt ? vm.endMgt : 0);
+              this.line++;
+            }
+          }
 
           vm.updateConfig = {};
           vm.updateConfig = {
@@ -341,6 +361,12 @@ export default {
             x: this.leftDis,
             y: this.topDis,
           };
+          //添加行列
+          if (!this.rows[this.line]) {
+            this.rows[this.line] = [];
+          }
+          this.rows[this.line].push(vm);
+          this.updateInnerWidthHeight();
         }
       });
     },
@@ -363,6 +389,7 @@ export default {
       // this.innerWidth = 0;
       // this.innerHeight = 0;
       this.topDis = 0;
+      this.rows = [];
       this.$nextTick(() => {
         let childrens = this.$refs["slot"].$children;
         //获取space-between应该补充的间隙，已处理无效参数，包括非space-between
@@ -479,7 +506,11 @@ export default {
             // x: vm.endMgl,
             x: this.leftDis,
           };
-
+          //添加行列
+          if (!this.rows[this.line]) {
+            this.rows[this.line] = [];
+          }
+          this.rows[this.line].push(vm);
           console.log(
             this.name,
             "after-update",
@@ -496,6 +527,59 @@ export default {
             this.topDis
           );
         }
+
+        //计算容器里面的内容的宽
+        // if (childrens.length > 0) {
+         
+        //   if (this.line == 1) {
+        //     if (this.flexDir == "row") {
+        //        console.log("item####",item)
+        //       this.innerWidth = this.computedBoxWidth +=
+        //         item.endWidth + item.endX + item.endMgl + item.endMgr;
+        //     } else {
+        //       if (item.endWidth > this.maxWidth) {
+        //         this.maxWidth = item.endWidth;
+        //       }
+        //       if (i == len - 1) {
+        //         this.innerWidth = this.computedBoxWidth = this.maxWidth;
+        //       }
+        //     }
+        //   }
+        //   else{
+        //       if (this.flexDir == "row") {
+        //         //这里的宽是包括mgt mgl的
+        //         let heights=[];
+        //         this.rows.forEach((elements,i) => {
+        //             let maxHeight=0;
+        //             elements.forEach(item=>{
+        //               let mgHeight=item.endHeight+item.endMgt+item.endMgb;
+        //                if(mgHeight&&mgHeight>maxHeight){
+        //                  heights[i-1]=mgHeight;
+        //                }
+        //                maxHeight=mgHeight;
+        //             })
+        //         });
+        //         this.innerHeight=heights.reduce((a,b)=>a+b);
+        //       }
+        //       else{
+        //         //这里的宽是包括mgl mgr的
+        //         let widths=[];
+        //         this.rows.forEach((elements,i) => {
+        //             let maxWidth=0;
+        //             elements.forEach(item=>{
+        //               let mgWidth=item.endWidth+item.endMgr+item.endMgl;
+        //                if(mgWidth&&mgWidth>maxWidth){
+        //                  widths[i-1]=mgWidth;
+        //                }
+        //                maxWidth=mgWidth;
+        //             })
+        //         });
+        //         this.innerWidth=widths.reduce((a,b)=>a+b);
+        //       }
+        //   }
+        // }
+        this.updateInnerWidthHeight();
+
         // this.innerHeight = this.topDis;
       });
     },
@@ -515,20 +599,36 @@ export default {
         this.innerWidth = 0;
       }
 
+      // //计算容器里面的内容的宽
+      // if (childrens.length > 0) {
+      //   if (this.flexDir == "row") {
+      //     this.innerWidth = this.computedBoxWidth +=
+      //       item.endWidth + item.endX + item.endMgl + item.endMgr;
+      //   } else {
+      //     if (item.endWidth > this.maxWidth) {
+      //       this.maxWidth = item.endWidth;
+      //     }
+      //     if (i == len - 1) {
+      //       this.innerWidth = this.computedBoxWidth = this.maxWidth;
+      //     }
+      //   }
+      // }
+
+      //计算容器的宽高
       if (this.width) {
         this.computedBoxWidth = this.endWidth;
         return;
       } else if (childrens.length > 0) {
         //区分横竖布局
         if (this.flexDir == "row") {
-          this.innerWidth = this.computedBoxWidth +=
+          this.computedBoxWidth +=
             item.endWidth + item.endX + item.endMgl + item.endMgr;
         } else {
           if (item.endWidth > this.maxWidth) {
             this.maxWidth = item.endWidth;
           }
           if (i == len - 1) {
-            this.innerWidth = this.computedBoxWidth = this.maxWidth;
+            this.computedBoxWidth = this.maxWidth;
           }
         }
       } else {
@@ -552,12 +652,16 @@ export default {
       }
       console.log(this.name, "updateColBoxHeight1");
       //如果有设置高度,这里 computedBoxHeight   innerHeight 混淆了，需要修正
+      // if (childrens.length > 0) {
+      //   this.innerHeight = this.computedBoxHeight +=
+      //     item.endHeight + item.endY + item.endMgt + item.endMgb;
+      // }
       if (this.height) {
         this.computedBoxHeight = this.endHeight;
-        console.log(this.name, "updateColBoxHeight2");
+        console.log(this.name, "updateColBoxHeight2",this.computedBoxHeight);
         return;
-      } else  if (childrens.length > 0) {
-        this.innerHeight = this.computedBoxHeight +=
+      } else if (childrens.length > 0) {
+        this.computedBoxHeight +=
           item.endHeight + item.endY + item.endMgt + item.endMgb;
         console.log(
           this.name,
@@ -585,18 +689,67 @@ export default {
       if (item.endHeight > this.maxHeight) {
         this.maxHeight = item.endHeight;
       }
-      if (i == len - 1) {
+      if (i == len - 1&&this.line==1) {
         this.computedBoxHeight = this.maxHeight;
       }
       console.log(this.name, "this.computedBoxHeight", this.computedBoxHeight);
     },
     //计算容器高度 入口
     updateBoxHeight(i, item, len) {
-      if (this.flexDir == "row") {
-        this.updateRowBoxHeight(i, item, len);
-      } else {
-        console.log(this.name, "updateColBoxHeight rukou");
-        this.updateColBoxHeight(i, item, len);
+      this.updateRowBoxHeight(i, item, len);
+      this.updateColBoxHeight(i, item, len);
+    },
+    updateInnerWidthHeight() {
+      let childrens = this.$refs["slot"].$children;
+      if (childrens.length > 0) {
+        if (this.line == 1) {
+          // if (this.flexDir == "row") {
+          //   this.innerWidth = this.computedBoxWidth +=
+          //     item.endWidth + item.endX + item.endMgl + item.endMgr;
+
+          //   // this.innerHeight = this.computedBoxHeight +=
+          //   //   item.endHeight + item.endY + item.endMgt + item.endMgb;
+
+          // } else if(this.flexDir == "column") {
+          //   if (item.endWidth > this.maxWidth) {
+          //     this.maxWidth = item.endWidth;
+          //   }
+          //   if (i == len - 1) {
+          //     this.innerWidth = this.computedBoxWidth = this.maxWidth;
+          //   }
+          // }
+
+        } else {
+          if (this.flexDir == "row") {
+            //这里的宽是包括mgt mgl的
+            let heights = [];
+            this.rows.forEach((elements, i) => {
+              let maxHeight = 0;
+              elements.forEach((item) => {
+                let mgHeight = item.endHeight + item.endMgt + item.endMgb;
+                if (mgHeight && mgHeight > maxHeight) {
+                  heights[i - 1] = mgHeight;
+                }
+                maxHeight = mgHeight;
+              });
+            });
+            this.innerHeight = heights.reduce((a, b) => a + b);
+          } else {
+            //这里的宽是包括mgl mgr的
+            let widths = [];
+            this.rows.forEach((elements, i) => {
+              let maxWidth = 0;
+              elements.forEach((item) => {
+                let mgWidth = item.endWidth + item.endMgr + item.endMgl;
+                if (mgWidth && mgWidth > maxWidth) {
+                  widths[i - 1] = mgWidth;
+                }
+                maxWidth = mgWidth;
+              });
+            });
+            this.innerWidth = widths.reduce((a, b) => a + b);
+          }
+        }
       }
     },
   },
