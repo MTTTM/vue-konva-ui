@@ -1,48 +1,13 @@
 <template>
   <v-stage :config="configKonva">
     <v-layer ref="layer">
-      <!-- <linear-layout justifyContent="space-between" name="layout12" :width="900" key="5" debugerColor="black" :mgl="10">
-        <template v-for="item in [11,12,13,14]">
-          <kButton type="primary" :config="{mgl:0}" :text="item" :key="item"></kButton>
-        </template>
-      </linear-layout>-->
-      <!-- <linear-layout 
-        name="layoue003" 
-        flexDir="column" 
-        justifyContent="space-between" 
-        :height="600" :width="900" key="5" debugerColor="black" :mgl="10">
-        <template v-for="item in [11,12,13,14]">
-          <kButton type="primary" :config="{mgl:0}" :text="item" :key="item"></kButton>
-        </template>
-      </linear-layout>-->
-      <!-- <linear-layout 
-        name="layoue003" 
-        justifyContent="space-around" 
-        :height="600" :width="900" key="5" debugerColor="black" :mgl="10">
-        <template v-for="item in [11,12,13,14]">
-          <kButton type="primary" :config="{mgl:0}" :text="item" :key="item"></kButton>
-        </template>
-      </linear-layout>-->
 
-      <!-- <linear-layout
-        name="layoue003"
-        :flexWrap="true"
-        :height="600"
-        :width="900"
-        key="5"
-        debugerColor="black"
-        :mgl="10"
-      >
-        <template v-for="item in arr">
-          <kButton type="primary" :config="{mgl:10,mgt:10}" :text="item" :key="item"></kButton>
-        </template>
-      </linear-layout> -->
 
       <linear-layout
         name="layoue003"
         :flexWrap="true"
         alignItems="center"
-        flexDir="row"
+        flexDir="column"
         :height="600"
         :width="900"
         key="5"

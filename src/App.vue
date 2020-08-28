@@ -1,12 +1,15 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link>|
-      <router-link to="/about">About</router-link>|
-      <!-- <router-link to="/canvas">画布</router-link>|
-      <router-link to="/createjs">createjs</router-link>-->
-      <router-link to="/konva">konva</router-link>
-      <i class="van-icon van-icon-chat-o"></i>
+      <p>linearLayout</p>
+      <router-link to="/linearlayout">column</router-link>
+      <router-link to="/linearlayout2">row</router-link>
+      <router-link to="/linearlayout3">flexDir</router-link>
+      <router-link to="/linearlayout4">alignItems</router-link>
+      <router-link to="/linearlayout5">row  alignItems</router-link>
+      <router-link to="/linearLayoutBetween">linearLayoutBetween</router-link>
+      <router-link to="/linearLayoutWrap">column linearLayoutWrap</router-link>
+       <router-link to="/linearLayoutWrap2">row linearLayoutWrap2</router-link>
     </div>
     <router-view />
   </div>
@@ -31,16 +34,26 @@ body,
   padding: 30px;
   position: fixed;
   right: 0;
-  bottom: 0;
+  top: 0;
   z-index: 100;
+  max-width: 200px;
   a {
     font-weight: bold;
     color: #2c3e50;
-
+    display: block;
+    text-align: left;
     &.router-link-exact-active {
       color: #42b983;
     }
   }
 }
-@font-face{font-weight:400;font-family:vant-icon;font-style:normal;font-display:auto;src:url(https://img.yzcdn.cn/vant/vant-icon-eeb192.woff2) format('woff2'),url(https://img.yzcdn.cn/vant/vant-icon-eeb192.woff) format('woff'),url(https://img.yzcdn.cn/vant/vant-icon-eeb192.ttf) format('truetype')}
+@font-face {
+  font-weight: 400;
+  font-family: vant-icon;
+  font-style: normal;
+  font-display: auto;
+  src: url(https://img.yzcdn.cn/vant/vant-icon-eeb192.woff2) format("woff2"),
+    url(https://img.yzcdn.cn/vant/vant-icon-eeb192.woff) format("woff"),
+    url(https://img.yzcdn.cn/vant/vant-icon-eeb192.ttf) format("truetype");
+}
 </style>

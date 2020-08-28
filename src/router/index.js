@@ -81,6 +81,11 @@ Vue.use(VueRouter)
     component: () => import(/* webpackChunkName: "about" */ '../views/pages/linearLayoutWrap.vue')
   },
   {
+    path: '/linearLayoutWrap2',
+    name: 'linearLayoutWrap2',
+    component: () => import(/* webpackChunkName: "about" */ '../views/pages/linearLayoutWrap2.vue')
+  },
+  {
     path: '/text',
     name: 'text',
     component: () => import(/* webpackChunkName: "about" */ '../views/pages/text.vue')
