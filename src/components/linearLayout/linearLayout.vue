@@ -54,12 +54,7 @@ export default {
   },
   watch: {
     flexDir(newV) {
-      //更新容器宽高
-      this.updateBoxWidthHeight();
-      //更新子组件布局
-      this.updateChildLayOut();
-       //计算内部元素的堆叠起来的宽高
-      this.updateInnerWidthHeight();
+       this.entry();
     },
   },
   data() {
@@ -186,19 +181,30 @@ export default {
   },
   mounted() {
     this.strokeBackgroundColor = this.debugerColor;
-    this.$nextTick(() => {
-     
+    this.entry();
+  },
+  methods: {
+    entry(){
+       this.$nextTick(() => {
+     //获取到父容器的宽高，--》才能判断是否换行--》获取到行列数，才能计算内部元素宽高
+
+     //不换行，需要在布局前计算内部元素宽高
+     if(this.flexWrap==false){
+          //计算内部元素的堆叠起来的宽高
+       this.updateInnerWidthHeight();
+     }
       //更新容器宽高
       this.updateBoxWidthHeight();
       //更新子组件布局
       this.updateChildLayOut();
-       //计算内部元素的堆叠起来的宽高
-      this.updateInnerWidthHeight();
+      //换行，需要在布局后计算内部宽高
+      if(this.flexWrap){
+      //  //计算内部元素的堆叠起来的宽高
+       this.updateInnerWidthHeight();
+      }
 
     });
-    console.log("childArr", this.childArr);
-  },
-  methods: {
+    },
     mouseoverfun() {
       if (this.strokeBackgroundColor == "green") {
         this.strokeBackgroundColor = this.debugerColor
