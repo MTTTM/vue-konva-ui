@@ -58,6 +58,8 @@ export default {
       this.updateBoxWidthHeight();
       //更新子组件布局
       this.updateChildLayOut();
+       //计算内部元素的堆叠起来的宽高
+      this.updateInnerWidthHeight();
     },
   },
   data() {
@@ -145,7 +147,7 @@ export default {
           obj = Object.assign(obj, { y: 0 });
         } else if (this.alignItems == "flex-end") {
           obj = Object.assign(obj, {
-            y: this.endHeight - this.innerHeight,
+            y: this.computedBoxHeight - this.innerHeight +this.endMgt,
           });
         } else if (this.alignItems == "center") {
           obj = Object.assign(obj, {
@@ -171,7 +173,7 @@ export default {
           obj = Object.assign(obj, { x: 0 });
         } else if (this.alignItems == "flex-end") {
           obj = Object.assign(obj, {
-            x: this.endWidth - this.innerWidth - this.endMgl - this.endMgr,
+            x: this.endWidth - this.innerWidth + this.endMgl,
           });
         } else if (this.alignItems == "center") {
           obj = Object.assign(obj, {
@@ -185,12 +187,13 @@ export default {
   mounted() {
     this.strokeBackgroundColor = this.debugerColor;
     this.$nextTick(() => {
-      //计算内部元素的堆叠起来的宽高
-      this.updateInnerWidthHeight();
+     
       //更新容器宽高
       this.updateBoxWidthHeight();
       //更新子组件布局
       this.updateChildLayOut();
+       //计算内部元素的堆叠起来的宽高
+      this.updateInnerWidthHeight();
 
     });
     console.log("childArr", this.childArr);
@@ -287,6 +290,7 @@ export default {
                 this.topDis +=
                   height + vm.defaultConfig.y + (vm.endMgt ? vm.endMgt : 0);
                 this.line++;
+                console.log("this.line",this.line)
               }
             }
             // console.log(
@@ -392,12 +396,10 @@ export default {
       // this.innerHeight = 0;
       this.topDis = 0;
       this.rows = [];
-      this.$nextTick(() => {
+      
         let childrens = this.$refs["slot"].$children;
         //获取space-between应该补充的间隙，已处理无效参数，包括非space-between
         let betweenMgt = 0;
-
-        
         let mgt = this.endMgt;
         for (let i = 0; i < childrens.length; i++) {
           let vm = childrens[i];
@@ -494,7 +496,7 @@ export default {
               this.leftDis +=
                 width + vm.defaultConfig.x + (vm.endMgl ? vm.endMgl : 0);
               this.line++;
-              console.log("this.leftDis", i, this.leftDis);
+              console.log("this.line1",this.line, i, this.leftDis);
             }
           }
 
@@ -531,7 +533,7 @@ export default {
           );
         }
         
-      });
+      
     },
     //容器内部元素的布局排版
     updateChildLayOut() {
@@ -545,6 +547,7 @@ export default {
       let childrens = this.$refs["slot"].$children;
       this.innerWidth = 0;
       this.innerHeight = 0;
+       console.log("this.line 5",this.line)
       if (childrens.length > 0) {
         if (this.line == 1) {
           if (this.flexDir == "row") {
@@ -552,15 +555,6 @@ export default {
             childrens.forEach((item, index) => {
               this.innerWidth +=
                 item.endWidth + item.endX + item.endMgl + item.endMgr;
-              console.log(
-                "this.line????",
-                index,
-                item.endWidth,
-                item.endX,
-                item.endMgl,
-                item.endMgr
-              );
-
               if (item.endHeight > this.maxWidth) {
                 maxHeight = item.endHeight;
               }
@@ -592,7 +586,8 @@ export default {
               });
             });
             this.innerHeight = heights.reduce((a, b) => a + b);
-          } else {
+          }
+           else {
             //这里的宽是包括mgl mgr的
             let widths = [];
             this.rows.forEach((elements, i) => {
