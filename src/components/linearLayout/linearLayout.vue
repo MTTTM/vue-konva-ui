@@ -285,6 +285,10 @@ export default {
 
             this.leftDis +=
               width + vm.defaultConfig.x + (vm.endMgl ? vm.endMgl : 0);
+            if(vm.componentName=="LinearLayout"&&this.flexDir=="row"){
+               vm.updateConfig.width=this.innerWidth;
+               console.log(this.name,"this.innerWidth234433243223",this.innerWidth)
+            }
 
             //换行
             if (this.flexWrap) {
@@ -299,41 +303,42 @@ export default {
                 console.log("this.line",this.line)
               }
             }
-            // console.log(
-            //   this.name,
-            //   i,
-            //   "after",
-            //   "this.leftDis",
-            //   this.leftDis,
-            //   "vm.defaultConfig.x",
-            //   vm.defaultConfig.x,
-            //   "width:",
-            //   width,
-            //   "vm.mgl",
-            //   vm.mgl,
-            //   "this.$sizeW(mgl)",
-            //   this.$sizeW(vm.mgl),
-            //   "vm.endMgl",
-            //   vm.endMgl
-            // );
+            console.log(
+              this.name,
+              i,
+              "after",
+              "this.leftDis",
+              this.leftDis,
+              "vm.defaultConfig.x",
+              vm.defaultConfig.x,
+              "width:",
+              width,
+              "vm.mgl",
+              vm.mgl,
+              "this.$sizeW(mgl)",
+              this.$sizeW(vm.mgl),
+              "vm.endMgl",
+              vm.endMgl,
+              vm
+            );
           } else {
             this.line = 1;
             this.leftDis += vm.defaultConfig.x + (vm.endMgl ? vm.endMgl : 0);
-            // console.log(
-            //   this.name,
-            //   i,
-            //   "after",
-            //   "this.leftDis",
-            //   this.leftDis,
-            //   "vm.defaultConfig.x",
-            //   vm.defaultConfig.x,
-            //   "width:",
-            //   width,
-            //   "vm.mgl",
-            //   vm.mgl,
-            //   "vm.endMgl",
-            //   vm.endMgl
-            // );
+            console.log(
+              this.name,
+              i,
+              "after",
+              "this.leftDis",
+              this.leftDis,
+              "vm.defaultConfig.x",
+              vm.defaultConfig.x,
+              "width:",
+              width,
+              "vm.mgl",
+              vm.mgl,
+              "vm.endMgl",
+              vm.endMgl
+            );
           }
           // this.innerWidth = this.leftDis
 
@@ -381,6 +386,9 @@ export default {
           this.updateInnerWidthHeight();
         }
       });
+    },
+    updateLinearChildWidth(){
+
     },
     //更正容器款高
     updateBoxWidthHeight() {
@@ -555,16 +563,19 @@ export default {
       this.innerHeight = 0;
        console.log("this.line 5",this.line)
       if (childrens.length > 0) {
+        console.log(this.name,"this.innerWidth thsi line ",this.innerWidth,this.line)
         if (this.line == 1) {
           if (this.flexDir == "row") {
             let maxHeight = 0;
             childrens.forEach((item, index) => {
               this.innerWidth +=
                 item.endWidth + item.endX + item.endMgl + item.endMgr;
+                 console.log(this.name,"this.innerWidth",item)
               if (item.endHeight > this.maxWidth) {
                 maxHeight = item.endHeight;
               }
             });
+            console.log(this.name,"this.innerWidth",this.innerWidth)
             this.innerHeight = maxHeight;
           } else if (this.flexDir == "column") {
             let maxWidth = 0;

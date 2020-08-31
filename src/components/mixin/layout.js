@@ -91,15 +91,28 @@ export default {
             return this.$sizeW(this.mgl);
         },
         endWidth(){
-            //计算后的width
-             let t=this.$sizeW(this.width)?this.$sizeW(this.width):this.computedBoxWidth;
-             console.log("endWidth",t)
-             return t;
-            
+             if(this.$sizeW(this.width)){
+               return this.$sizeW(this.width);
+             }
+             else if(this.computedBoxWidth){
+                return this.computedBoxWidth;
+             }
+             else {
+                 return this.innerWidth
+             }
         },
         endHeight(){
             //计算后的高
-            return this.$sizeW(this.height)?this.$sizeW(this.height):this.computedBoxHeight;
+            let t=null;
+            if(this.$sizeW(this.height)){
+                return this.$sizeW(this.height);
+            }
+            else if(this.computedBoxHeight){
+                return this.computedBoxHeight;
+            }
+            else {
+               return this.innerHeight
+            }
         }
     }
 }
