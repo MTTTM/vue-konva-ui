@@ -101,6 +101,16 @@ Vue.use(VueRouter)
     component: () => import(/* webpackChunkName: "about" */ '../views/pages/linearLayoutWrap2.vue')
   },
   {
+    path: '/multRowInCol',
+    name: 'multRowInCol',
+    component: () => import(/* webpackChunkName: "about" */ '../views/pages/multRowInCol.vue')
+  },
+  {
+    path: '/mulColInRow',
+    name: 'mulColInRow',
+    component: () => import(/* webpackChunkName: "about" */ '../views/pages/mulColInRow.vue')
+  },
+  {
     path: '/text',
     name: 'text',
     component: () => import(/* webpackChunkName: "about" */ '../views/pages/text.vue')

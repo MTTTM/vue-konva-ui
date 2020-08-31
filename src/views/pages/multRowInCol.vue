@@ -1,10 +1,17 @@
 <template>
   <v-stage :config="configKonva">
        <v-layer ref="layer">
-           <linear-layout ref="linearLayout" name="layout2" flexDir ="column">
+           <linear-layout ref="linearLayout" flexDir ="column">
+            <linear-layout name="layout1" ref="linearLayout"  >
              <template v-for="item in arr">
                  <kButton type="info" :config="{mgl:10,mgt:10}" :text="item" :key="item"></kButton>
              </template>   
+           </linear-layout>   
+            <linear-layout ref="linearLayout" :mgt="10" >
+             <template v-for="item in arr">
+                 <kButton type="info" :config="{mgl:10,mgt:10}" :text="item" :key="item"></kButton>
+             </template>   
+           </linear-layout>  
            </linear-layout>
        </v-layer>
   </v-stage>
@@ -26,12 +33,12 @@ export default {
     };
   },
   mounted(){
-    this.$nextTick(()=>{
-        document.onclick=()=>{
-           this.arr.splice(0,1);
-          //  console.log("this.$parents",this.$parent)
-        }
-    })
+    // this.$nextTick(()=>{
+    //     document.onclick=()=>{
+    //        this.arr.splice(0,1);
+    //       //  console.log("this.$parents",this.$parent)
+    //     }
+    // })
   }
 };
 </script>

@@ -16,7 +16,7 @@ import LayoutMixins from "../mixin/layout";
 import linearLayoutSpaceBetween from "../mixin/linearLayoutSpaceBetween.js";
 import linearLayoutSpaceAround from "../mixin/linearLayoutSpaceAround.js";
 import computedWidthHeight from "../mixin/linearLayoutUpdateComputedWidthHeight.js";
-import { getParentLinearLayout } from "../../utils/dom";
+
 export default {
   name: "LinearLayout",
   mixins: [
