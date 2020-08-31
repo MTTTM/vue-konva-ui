@@ -98,6 +98,7 @@ export default {
                 return this.computedBoxWidth;
              }
              else {
+                  //linear 嵌套linear时候会用到
                  return this.innerWidth
              }
         },
@@ -111,6 +112,7 @@ export default {
                 return this.computedBoxHeight;
             }
             else {
+                //linear 嵌套linear时候会用到
                return this.innerHeight
             }
         }
