@@ -13,20 +13,20 @@ export default {
         this.computedBoxWidth = this.endWidth;
         return;
       } 
-      else if (childrens.length > 0&&/LinearLayout/ig.test(item.componentName)) {
-        //区分横竖布局
-        if (this.flexDir == "row") {
-          this.computedBoxWidth +=
-            item.endWidth + item.endX + item.endMgl + item.endMgr;
-        } else {
-          if (item.endWidth > this.maxWidth) {
-            this.maxWidth = item.endWidth;
-          }
-          if (i == len - 1) {
-            this.computedBoxWidth = this.maxWidth;
-          }
-        }
-      } 
+      // else if (childrens.length > 0&&/LinearLayout/ig.test(item.componentName)) {
+      //   //区分横竖布局
+      //   if (this.flexDir == "row") {
+      //     this.computedBoxWidth +=
+      //       item.endWidth + item.endX + item.endMgl + item.endMgr;
+      //   } else {
+      //     if (item.endWidth > this.maxWidth) {
+      //       this.maxWidth = item.endWidth;
+      //     }
+      //     if (i == len - 1) {
+      //       this.computedBoxWidth = this.maxWidth;
+      //     }
+      //   }
+      // } 
       else {
         if (/vLayer/gi.test(this.$parent.$vnode.tag)) {
           this.computedBoxWidth = this.$parent.getNode().width();
@@ -47,11 +47,11 @@ export default {
         this.computedBoxHeight = this.endHeight;
         return;
       }
-       else if (childrens.length > 0&&/LinearLayout/ig.test(item.componentName)) {
-        this.computedBoxHeight +=
-          item.endHeight + item.endY + item.endMgt + item.endMgb;
-        return;
-      } 
+      //  else if (childrens.length > 0&&/LinearLayout/ig.test(item.componentName)) {
+      //   this.computedBoxHeight +=
+      //     item.endHeight + item.endY + item.endMgt + item.endMgb;
+      //   return;
+      // } 
       else {
         if (/vLayer/gi.test(this.$parent.$vnode.tag)) {
           this.computedBoxHeight = this.$parent.getNode().height();
