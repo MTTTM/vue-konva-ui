@@ -1,6 +1,12 @@
 <template>
-  <v-group ref="slot" :config="groupConfig">
-      <slot></slot>
+  <v-group  >
+      <v-rect
+        :config="holidConfig"
+       
+      />
+      <v-group ref="slot" :config="groupConfig" >
+       <slot ></slot>
+      </v-group> 
   </v-group>
 </template>
 <script>
@@ -11,10 +17,36 @@ export default {
         return "row"; //row column
       },
     },
+    width:{
+      type:Number,
+      required:true
+    },
+    height:{
+      type:Number,
+      required:true
+    }
   },
   name: "kScrollView",
+  computed:{
+    "holidConfig"(){
+      let t= {
+         x:0,
+         y:0,
+         width:this.$sizeW(this.width),
+         height:this.$sizeW(this.height),
+         stroke:  "green",
+         strokeWidth: 1,
+      }
+      console.log("ttttt",t)
+      return t;
+    },
+    debugerStatus() {
+      return this.$DEBUGER;
+    }
+  },
   data() {
       let me=this;
+      console.log("lineLayoutChild me",me.width)
     return {
       groupConfig: {
         x: 0,
@@ -23,9 +55,10 @@ export default {
         dragBoundFunc: function (pos) {
           let lineLayoutChild=me.$refs['slot'].$children[0];
           let x=pos.x;  
-          let wrapWidth=lineLayoutChild.width;
-          let innerWidth=lineLayoutChild.innerWidth;
+          let wrapWidth=me.width;
+          let innerWidth=lineLayoutChild.endWidth;
        //如果内容宽度比本组件的width小，就不允许滚动
+       console.log("lineLayoutChild",innerWidth,wrapWidth,innerWidth-wrapWidth)
         if(innerWidth<wrapWidth){
             x=0;
         }
@@ -41,10 +74,12 @@ export default {
           };
         },
       },
+      strokeBackgroundColor:"green"
     };
   },
   mounted(){
       this.$nextTick(()=>{
+        // console.log("bbbbbbbb",this.$refs["slot"])
           if(this.$refs['slot'].$children[0].componentName!="LinearLayout"){
               throw "children must be tag LinearLayout"
           }
