@@ -80,6 +80,7 @@ export default {
                 width: this.endWidth,
                 height: this.endHeight,
                 stroke: this.strokeBackgroundColor,
+                fill: '#fff',//scrollView实现overflow的必要条件
                 strokeWidth: 1,
             };
         },

@@ -82,6 +82,7 @@ export default {
       groupConfig: {
         x: 0,
         y: 0,
+        globalCompositeOperation: 'source-atop',
         draggable: true,
         dragBoundFunc: function (pos) {
           let lineLayoutChild = me.$refs["slot"].$children[0];
