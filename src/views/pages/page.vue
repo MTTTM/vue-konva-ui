@@ -19,7 +19,7 @@
               <linear-layout :width="1000" :height="44">
                       <kButton type="primary" :config="{mgl:10}" text="122"></kButton>
                       <kButton type="warning" :config="{mgl:10}" text="2"></kButton>
-                      <kButton type="danger" :config="{mgl:10,height:50}" text="3"></kButton>
+                      <kButton type="danger" :config="{mgl:10}" text="3"></kButton>
                       <kButton type="info" :config="{mgl:10}" text="4"></kButton>
                       <kButton type="info" :config="{mgl:10}" text="5"></kButton>
                       <kButton type="info" :config="{mgl:10}" text="6"></kButton>
@@ -28,6 +28,17 @@
                       <kButton type="info" :config="{mgl:10}" text="9"></kButton>
               </linear-layout>
           </scroll-view>
+          <linear-layout :width="1000" :height="44" :mgt="10">
+                      <kButton type="primary" :config="{mgl:10}" text="122"></kButton>
+                      <kButton type="warning" :config="{mgl:10}" text="2"></kButton>
+                      <kButton type="danger" :config="{mgl:10}" text="3"></kButton>
+                      <kButton type="info" :config="{mgl:10}" text="4"></kButton>
+                      <kButton type="info" :config="{mgl:10}" text="5"></kButton>
+                      <kButton type="info" :config="{mgl:10}" text="6"></kButton>
+                      <kButton type="info" :config="{mgl:10}" text="7"></kButton>
+                      <kButton type="info" :config="{mgl:10}" text="8"></kButton>
+                      <kButton type="info" :config="{mgl:10}" text="9"></kButton>
+              </linear-layout>
           <scroll-view :height="44" :width="400" :mgt="10" debugerColor="blue"> 
               <linear-layout :width="1000" :height="44">
                       <kButton type="primary" :config="{mgl:10}" text="1"></kButton>

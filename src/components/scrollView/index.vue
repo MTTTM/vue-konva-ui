@@ -115,6 +115,14 @@ export default {
   created(){
       this.defaultConfig.height=sizeW(this.height);
       this.defaultConfig.width=sizeW(this.width);
+      this.defaultConfig=Object.assign({}, this.defaultConfig,{
+        height:sizeW(this.height),
+        width:sizeW(this.width),
+        mgl:sizeW(this.mgl),
+        mgr:sizeW(this.mgr),
+        mgt:sizeW(this.mgt),
+        mgb:sizeW(this.mgb)
+      })
   },
   mounted() {
     this.$nextTick(() => {
