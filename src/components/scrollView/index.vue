@@ -3,7 +3,17 @@
     <v-rect :config="holidConfig" />
     <v-group ref="slot" :config="groupConfig">
       <slot></slot>
-    </v-group>
+    </v-group>  
+    <v-line :config="{
+        x: 0,
+        y: 0,
+        points: [0, 0, endWidth, 0, endWidth, endHeight,0,endHeight,0,0],
+        closed: false,
+        stroke: 'black',
+        lineCap: 'round',
+        lineJoin: 'round',
+        globalCompositeOperation: 'source-over',
+      }"/>
   </v-group>
 </template>
 <script>

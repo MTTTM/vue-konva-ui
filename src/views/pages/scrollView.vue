@@ -2,7 +2,7 @@
   <v-stage :config="configKonva">
        <v-layer ref="layer">
          <scroll-view :height="100" :width="400"> 
-            <linear-layout :width="900" :height="44">
+            <linear-layout :width="900" :height="44" :y="1" :x="1">
                     <kButton type="primary" :config="{mgl:10}" text="1"></kButton>
                     <kButton type="warning" :config="{mgl:10}" text="2"></kButton>
                     <kButton type="danger" :config="{mgl:10}" text="3"></kButton>

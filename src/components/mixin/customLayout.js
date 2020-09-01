@@ -84,6 +84,9 @@ export default {
                 strokeWidth: 1,
             };
         },
+        holidConfigCover(){
+            return Object.assign({},this.holidConfig,{fill:'transparent', globalCompositeOperation: 'source-atop',})
+        },
         endX() {
             //计算后的X
             return this.defaultConfig.x ? this.defaultConfig.x : 0;
