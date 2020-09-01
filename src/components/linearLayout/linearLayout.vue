@@ -280,7 +280,8 @@ export default {
               "vm.mgl",
               vm.mgl,
               "vm.endMgl",
-              vm.endMgl
+              vm.endMgl,
+              vm
             );
 
             this.leftDis +=
@@ -463,7 +464,8 @@ export default {
             "mgt",
             vm.endMgt,
             "topDis",
-            this.topDis
+            this.topDis,
+            vm
           );
 
           if (i > 0) {
@@ -543,7 +545,8 @@ export default {
             "mgt",
             vm.endMgt,
             "topDis",
-            this.topDis
+            this.topDis,
+            vm
           );
         }
         

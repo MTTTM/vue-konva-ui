@@ -13,6 +13,10 @@ export default {
                 return {};
             },
         },
+        debugerColor:{
+            type:String,
+            default:"red"
+        }
     },
     data() {
         return {

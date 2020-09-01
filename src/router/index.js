@@ -111,6 +111,11 @@ Vue.use(VueRouter)
     component: () => import(/* webpackChunkName: "about" */ '../views/pages/mulColInRow.vue')
   },
   {
+    path: '/page',
+    name: 'page',
+    component: () => import(/* webpackChunkName: "about" */ '../views/pages/page.vue')
+  },
+  {
     path: '/text',
     name: 'text',
     component: () => import(/* webpackChunkName: "about" */ '../views/pages/text.vue')

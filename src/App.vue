@@ -16,6 +16,7 @@
       <router-link to="/linearLayoutWrap">column linearLayoutWrap</router-link>
       <router-link to="/linearLayoutWrap2">row linearLayoutWrap2</router-link>
       <router-link to="/scrollView">scrollView</router-link>
+      <router-link to="/page">page</router-link>
     </div>
     <router-view />
   </div>
