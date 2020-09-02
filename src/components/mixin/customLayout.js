@@ -10,7 +10,9 @@ export default {
             required: false,
             type: Object,
             default() {
-                return {};
+                return {
+                    flex:"none"
+                };
             },
         },
         debugerColor:{
@@ -114,6 +116,9 @@ export default {
         },
         endMgb() {
             return this.defaultConfig.mgb ? this.defaultConfig.mgb : 0
+        },
+        endFlex(){
+          return  this.flex?this.flex:(this.config.flex?this.config.flex:"node");
         }
     },
     methods: {

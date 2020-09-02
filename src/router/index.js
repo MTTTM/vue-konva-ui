@@ -95,6 +95,11 @@ Vue.use(VueRouter)
     component: () => import(/* webpackChunkName: "about" */ '../views/pages/linearLayoutColSpaceAround.vue')
   },
   {
+    path: '/linearLayoutRowFlexItem',
+    name: 'linearLayoutRowFlexItem',
+    component: () => import(/* webpackChunkName: "about" */ '../views/pages/linearLayoutFlexItem.vue')
+  },
+  {
     path: '/linearLayoutWrap',
     name: 'linearLayoutWrap',
     component: () => import(/* webpackChunkName: "about" */ '../views/pages/linearLayoutWrap.vue')
@@ -123,6 +128,11 @@ Vue.use(VueRouter)
     path: '/text',
     name: 'text',
     component: () => import(/* webpackChunkName: "about" */ '../views/pages/text.vue')
+  },
+  {
+    path: '*',
+    name: 'page404',
+    component: () => import(/* webpackChunkName: "about" */ '../views/pages/404.vue')
   }
 ]
 

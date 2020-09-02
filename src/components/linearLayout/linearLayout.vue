@@ -54,7 +54,7 @@ export default {
   },
   watch: {
     flexDir(newV) {
-       this.entry();
+      this.entry();
     },
   },
   data() {
@@ -142,7 +142,7 @@ export default {
           obj = Object.assign(obj, { y: 0 });
         } else if (this.alignItems == "flex-end") {
           obj = Object.assign(obj, {
-            y: this.computedBoxHeight - this.innerHeight +this.endMgt,
+            y: this.computedBoxHeight - this.innerHeight + this.endMgt,
           });
         } else if (this.alignItems == "center") {
           obj = Object.assign(obj, {
@@ -184,26 +184,25 @@ export default {
     this.entry();
   },
   methods: {
-    entry(){
-       this.$nextTick(() => {
-     //获取到父容器的宽高，--》才能判断是否换行--》获取到行列数，才能计算内部元素宽高
+    entry() {
+      this.$nextTick(() => {
+        //获取到父容器的宽高，--》才能判断是否换行--》获取到行列数，才能计算内部元素宽高
 
-     //不换行，需要在布局前计算内部元素宽高
-     if(this.flexWrap==false){
+        //不换行，需要在布局前计算内部元素宽高
+        if (this.flexWrap == false) {
           //计算内部元素的堆叠起来的宽高
-       this.updateInnerWidthHeight();
-     }
-      //更新容器宽高
-      this.updateBoxWidthHeight();
-      //更新子组件布局
-      this.updateChildLayOut();
-      //换行，需要在布局后计算内部宽高
-      if(this.flexWrap){
-      //  //计算内部元素的堆叠起来的宽高
-       this.updateInnerWidthHeight();
-      }
-
-    });
+          this.updateInnerWidthHeight();
+        }
+        //更新容器宽高
+        this.updateBoxWidthHeight();
+        //更新子组件布局
+        this.updateChildLayOut();
+        //换行，需要在布局后计算内部宽高
+        if (this.flexWrap) {
+          //  //计算内部元素的堆叠起来的宽高
+          this.updateInnerWidthHeight();
+        }
+      });
     },
     mouseoverfun() {
       if (this.strokeBackgroundColor == "green") {
@@ -219,6 +218,32 @@ export default {
       };
       console.log(this.name, "debuger", obj);
     },
+    /**
+     * 依据子元素的 flex 来计算份额
+     * @returns {objcet}
+     * @description
+     *  partCount flex加起来有多少份
+     *  onePart   flex:1 等于多少值
+     */
+    computedFlexItemInfo(childrens) {
+      let partCount = 1; //flex item的flex相加总和
+      let flexItemArr = childrens.filter(
+        (item) => item.endFlex != "none"
+      );
+      if (flexItemArr.length > 0) {
+        partCount = flexItemArr.reduce((a, b) => a.endFlex + b.endFlex);
+      }
+      let flexNoneItemArr = childrens.filter((item) => item.endFlex == "none");
+      let flexNoneItemWidth = flexNoneItemArr.reduce(
+        (a, b) =>
+          a.endMgr + a.endMgl + a.endWidth + (b.endWidth + b.endMgl + b.endMgr)
+      );
+      let t= {
+        partCount,
+        onePart: (this.endWidth - flexNoneItemWidth) / partCount,
+      };
+      return t;
+    },
     updateRowLayout() {
       this.leftDis = 0;
       this.topDis = 0;
@@ -227,13 +252,9 @@ export default {
         let childrens = this.$refs["slot"].$children;
         //获取space-between应该补充的间隙，已处理无效参数，包括非space-between
         let betweenMgl = 0;
-
-        if (this.justifyContent == "space-between") {
-          betweenMgl = this.mixinSpaceBetWeenPlusMgl(childrens);
-        } else if (this.justifyContent == "space-around") {
-          betweenMgl = this.mixinSpaceAroundPlusMgl(childrens);
-        }
-
+        //获取子元素flex的相关信息
+        let flexInfo = this.computedFlexItemInfo(childrens);
+        console.log("flexInfo", flexInfo);
         for (let i = 0; i < childrens.length; i++) {
           let vm = childrens[i];
           if (vm.defaultConfig == undefined) {
@@ -252,12 +273,21 @@ export default {
             };
             continue;
           }
+
           // //拿到前一个容器的宽度
           let preVm = childrens[i - 1];
           let width = 0;
           let height = 0;
           if (preVm && preVm.defaultConfig) {
-            width = preVm.endWidth ? preVm.endWidth : preVm.defaultConfig.width;
+            // width = preVm.endWidth ? preVm.endWidth : preVm.defaultConfig.width;
+            console.log("preVm",preVm.end)
+            if (preVm.endConfig && preVm.endConfig.width) {
+              width = preVm.endConfig.width;
+            } else if (preVm.endWidth) {
+              width = preVm.endWidth;
+            } else {
+              width = preVm.defaultConfig.width;
+            }
             height = preVm.endHeight
               ? preVm.endHeight
               : preVm.defaultConfig.height;
@@ -286,9 +316,13 @@ export default {
 
             this.leftDis +=
               width + vm.defaultConfig.x + (vm.endMgl ? vm.endMgl : 0);
-            if(vm.componentName=="LinearLayout"&&this.flexDir=="row"){
-               vm.updateConfig.width=this.innerWidth;
-               console.log(this.name,"this.innerWidth234433243223",this.innerWidth)
+            if (vm.componentName == "LinearLayout" && this.flexDir == "row") {
+              vm.updateConfig.width = this.innerWidth;
+              console.log(
+                this.name,
+                "this.innerWidth234433243223",
+                this.innerWidth
+              );
             }
 
             //换行
@@ -301,45 +335,46 @@ export default {
                 this.topDis +=
                   height + vm.defaultConfig.y + (vm.endMgt ? vm.endMgt : 0);
                 this.line++;
-                console.log("this.line",this.line)
+                console.log("this.line", this.line);
               }
             }
-            console.log(
-              this.name,
-              i,
-              "after",
-              "this.leftDis",
-              this.leftDis,
-              "vm.defaultConfig.x",
-              vm.defaultConfig.x,
-              "width:",
-              width,
-              "vm.mgl",
-              vm.mgl,
-              "this.$sizeW(mgl)",
-              this.$sizeW(vm.mgl),
-              "vm.endMgl",
-              vm.endMgl,
-              vm
-            );
+            // console.log(
+            //   this.name,
+            //   i,
+            //   "after",
+            //   "this.leftDis",
+            //   this.leftDis,
+            //   "vm.defaultConfig.x",
+            //   vm.defaultConfig.x,
+            //   "width:",
+            //   width,
+            //   "vm.mgl",
+            //   vm.mgl,
+            //   "this.$sizeW(mgl)",
+            //   this.$sizeW(vm.mgl),
+            //   "vm.endMgl",
+            //   vm.endMgl,
+            //   "vm.endConfig.width",
+            //   vm.endConfig.width
+            // );
           } else {
             this.line = 1;
             this.leftDis += vm.defaultConfig.x + (vm.endMgl ? vm.endMgl : 0);
-            console.log(
-              this.name,
-              i,
-              "after",
-              "this.leftDis",
-              this.leftDis,
-              "vm.defaultConfig.x",
-              vm.defaultConfig.x,
-              "width:",
-              width,
-              "vm.mgl",
-              vm.mgl,
-              "vm.endMgl",
-              vm.endMgl
-            );
+            // console.log(
+            //   this.name,
+            //   i,
+            //   "after",
+            //   "this.leftDis",
+            //   this.leftDis,
+            //   "vm.defaultConfig.x",
+            //   vm.defaultConfig.x,
+            //   "width:",
+            //   width,
+            //   "vm.mgl",
+            //   vm.mgl,
+            //   "vm.endMgl",
+            //   vm.endMgl
+            // );
           }
           // this.innerWidth = this.leftDis
 
@@ -375,10 +410,42 @@ export default {
             x: this.leftDis,
             y: this.topDis,
           };
+
           vm.updateTextConfig = {
             x: this.leftDis,
             y: this.topDis,
           };
+
+          if (vm.endFlex != "none") {
+            let width = {
+              width: flexInfo.onePart * vm.endFlex - vm.endMgl - vm.endMgr,
+            };
+            console.log("flex width", width);
+            vm.updateConfig = Object.assign({}, vm.updateConfig, width);
+            vm.updateTextConfig = Object.assign({}, vm.updateTextConfig, width);
+          }
+
+          // console.log(
+          //     this.name,
+          //     i,
+          //     "after",
+          //     "this.leftDis",
+          //     this.leftDis,
+          //     "vm.defaultConfig.x",
+          //     vm.defaultConfig.x,
+          //     "width:",
+          //     width,
+          //     "vm.mgl",
+          //     vm.mgl,
+          //     "this.$sizeW(mgl)",
+          //     this.$sizeW(vm.mgl),
+          //     "vm.endMgl",
+          //     vm.endMgl,
+          //     "vm.endConfig.width",
+          //     vm.endConfig.width,
+          //     width
+          //   );
+
           //添加行列
           if (!this.rows[this.line]) {
             this.rows[this.line] = [];
@@ -388,9 +455,7 @@ export default {
         }
       });
     },
-    updateLinearChildWidth(){
-
-    },
+    updateLinearChildWidth() {},
     //更正容器款高
     updateBoxWidthHeight() {
       let childrens = this.$refs["slot"].$children;
@@ -411,146 +476,147 @@ export default {
       // this.innerHeight = 0;
       this.topDis = 0;
       this.rows = [];
-      
-        let childrens = this.$refs["slot"].$children;
-        //获取space-between应该补充的间隙，已处理无效参数，包括非space-between
-        let betweenMgt = 0;
-        let mgt = this.endMgt;
-        for (let i = 0; i < childrens.length; i++) {
-          let vm = childrens[i];
-          if (vm.defaultConfig == undefined) {
-            continue;
-          }
-          if (
-            i == childrens.length - 1 &&
-            this.justifyContent == "space-between"
-          ) {
-            let y = this.endHeight - vm.endMgb - vm.endHeight;
-            vm.updateConfig = {
-              y,
-            };
-            vm.updateTextConfig = {
-              y,
-            };
-            continue;
-          }
-          // this.updateBoxWidth(i, vm, childrens.length); //计算容器宽度
-          // this.updateBoxHeight(i, vm, childrens.length); //计算容器高度
-          let preVm = childrens[i - 1];
-          //拿到前一个容器的高度
-          let height = 0;
-          let width = 0;
-          if (preVm && preVm.defaultConfig) {
-            height = preVm.endHeight
-              ? preVm.endHeight
-              : preVm.defaultConfig.height;
-            width = preVm.endWidth ? preVm.endWidth : preVm.defaultConfig.width;
-          } else {
-            height = 0;
-            width = 0;
-          }
-          //拿到当前元素的endMgt
-          mgt = vm.endMgt ? vm.endMgt : 0;
+
+      let childrens = this.$refs["slot"].$children;
+      //获取space-between应该补充的间隙，已处理无效参数，包括非space-between
+      let betweenMgt = 0;
+      let mgt = this.endMgt;
+      for (let i = 0; i < childrens.length; i++) {
+        let vm = childrens[i];
+        if (vm.defaultConfig == undefined) {
+          continue;
+        }
+        if (
+          i == childrens.length - 1 &&
+          this.justifyContent == "space-between"
+        ) {
+          let y = this.endHeight - vm.endMgb - vm.endHeight;
+          vm.updateConfig = {
+            y,
+          };
+          vm.updateTextConfig = {
+            y,
+          };
+          continue;
+        }
+        // this.updateBoxWidth(i, vm, childrens.length); //计算容器宽度
+        // this.updateBoxHeight(i, vm, childrens.length); //计算容器高度
+        let preVm = childrens[i - 1];
+        //拿到前一个容器的高度
+        let height = 0;
+        let width = 0;
+        if (preVm && preVm.defaultConfig) {
+          height = preVm.endHeight
+            ? preVm.endHeight
+            : preVm.defaultConfig.height;
+
+          width = preVm.endWidth ? preVm.endWidth : preVm.defaultConfig.width;
+        } else {
+          height = 0;
+          width = 0;
+        }
+        //拿到当前元素的endMgt
+        mgt = vm.endMgt ? vm.endMgt : 0;
+        console.log(
+          this.name,
+          "before-update",
+          i,
+          "y:",
+          vm.defaultConfig.y,
+          "x:",
+          vm.defaultConfig.x,
+          "height:",
+          vm.defaultConfig.height,
+          "mgt",
+          vm.endMgt,
+          "topDis",
+          this.topDis,
+          vm
+        );
+
+        if (i > 0) {
+          this.topDis += height + vm.defaultConfig.y + mgt;
           console.log(
             this.name,
-            "before-update",
-            i,
-            "y:",
+            "index more than 0",
+            height,
             vm.defaultConfig.y,
-            "x:",
-            vm.defaultConfig.x,
-            "height:",
-            vm.defaultConfig.height,
-            "mgt",
-            vm.endMgt,
-            "topDis",
-            this.topDis,
-            vm
+            mgt
           );
+        } else {
+          this.topDis += vm.defaultConfig.y + mgt;
+          console.log(this.name, "zero:", height, vm.defaultConfig.y, mgt);
+        }
 
-          if (i > 0) {
-            this.topDis += height + vm.defaultConfig.y + mgt;
-            console.log(
-              this.name,
-              "index more than 0",
-              height,
-              vm.defaultConfig.y,
-              mgt
-            );
-          } else {
-            this.topDis += vm.defaultConfig.y + mgt;
-            console.log(this.name, "zero:", height, vm.defaultConfig.y, mgt);
-          }
+        console.log(this.name, "y", i, this.topDis);
 
-          console.log(this.name, "y", i, this.topDis);
-
-          if (this.justifyContent == "space-between") {
+        if (this.justifyContent == "space-between") {
           betweenMgt = this.mixinSpaceBetWeenPlusMgt(childrens);
         } else if (this.justifyContent == "space-around") {
           betweenMgt = this.mixinSpaceAroundPlusMgt(childrens);
         }
-          //第一个是贴边的，所以不需要加附加间距
-          if (this.justifyContent == "space-between") {
-            if (i > 0 && i != childrens.length - 1) {
-              this.topDis += betweenMgt;
-            }
-          } else if (this.justifyContent == "space-around") {
-            if (i == 0) {
-              this.topDis += betweenMgt;
-            } else {
-              this.topDis += betweenMgt * 2;
-            }
+        //第一个是贴边的，所以不需要加附加间距
+        if (this.justifyContent == "space-between") {
+          if (i > 0 && i != childrens.length - 1) {
+            this.topDis += betweenMgt;
           }
-
-          //换行
-          if (this.flexWrap) {
-            if (
-              this.topDis + vm.endHeight + vm.endMgt + vm.endMgb >
-              this.computedBoxHeight
-            ) {
-              this.topDis = vm.defaultConfig.y + (vm.endMgt ? vm.endMgt : 0);
-              this.leftDis +=
-                width + vm.defaultConfig.x + (vm.endMgl ? vm.endMgl : 0);
-              this.line++;
-              console.log("this.line1",this.line, i, this.leftDis);
-            }
+        } else if (this.justifyContent == "space-around") {
+          if (i == 0) {
+            this.topDis += betweenMgt;
+          } else {
+            this.topDis += betweenMgt * 2;
           }
-
-          vm.updateConfig = {};
-          vm.updateConfig = {
-            y: this.topDis,
-            // x: vm.endMgl,
-            x: this.leftDis,
-          };
-          vm.updateTextConfig = {
-            y: this.topDis,
-            // x: vm.endMgl,
-            x: this.leftDis,
-          };
-          //添加行列
-          if (!this.rows[this.line]) {
-            this.rows[this.line] = [];
-          }
-          this.rows[this.line].push(vm);
-          console.log(
-            this.name,
-            "after-update",
-            i,
-            "y:",
-            vm.updateConfig.y,
-            "x:",
-            vm.updateConfig.x,
-            "height:",
-            vm.updateConfig.height,
-            "mgt",
-            vm.endMgt,
-            "topDis",
-            this.topDis,
-            vm
-          );
         }
-        
-      
+
+        //换行
+        if (this.flexWrap) {
+          if (
+            this.topDis + vm.endHeight + vm.endMgt + vm.endMgb >
+            this.computedBoxHeight
+          ) {
+            this.topDis = vm.defaultConfig.y + (vm.endMgt ? vm.endMgt : 0);
+            this.leftDis +=
+              width + vm.defaultConfig.x + (vm.endMgl ? vm.endMgl : 0);
+            this.line++;
+            console.log("this.line1", this.line, i, this.leftDis);
+          }
+        }
+
+        vm.updateConfig = {};
+        vm.updateConfig = {
+          y: this.topDis,
+          // x: vm.endMgl,
+          x: this.leftDis,
+        };
+        vm.updateTextConfig = {
+          y: this.topDis,
+          // x: vm.endMgl,
+          x: this.leftDis,
+        };
+        //添加行列
+        if (!this.rows[this.line]) {
+          this.rows[this.line] = [];
+        }
+        this.rows[this.line].push(vm);
+        console.log(
+          this.name,
+          "after-update",
+          i,
+          "y:",
+          vm.updateConfig.y,
+          "x:",
+          vm.updateConfig.x,
+          "height:",
+          vm.updateConfig.height,
+          "mgt",
+          vm.endMgt,
+          "topDis",
+          this.topDis,
+          vm,
+          "endConfig.width",
+          vm.endConfig.width
+        );
+      }
     },
     //容器内部元素的布局排版
     updateChildLayOut() {
@@ -564,21 +630,26 @@ export default {
       let childrens = this.$refs["slot"].$children;
       this.innerWidth = 0;
       this.innerHeight = 0;
-       console.log("this.line 5",this.line)
+      console.log("this.line 5", this.line);
       if (childrens.length > 0) {
-        console.log(this.name,"this.innerWidth thsi line ",this.innerWidth,this.line)
+        console.log(
+          this.name,
+          "this.innerWidth thsi line ",
+          this.innerWidth,
+          this.line
+        );
         if (this.line == 1) {
           if (this.flexDir == "row") {
             let maxHeight = 0;
             childrens.forEach((item, index) => {
               this.innerWidth +=
                 item.endWidth + item.endX + item.endMgl + item.endMgr;
-                 console.log(this.name,"this.innerWidth",item)
+              console.log(this.name, "this.innerWidth", item);
               if (item.endHeight > this.maxWidth) {
                 maxHeight = item.endHeight;
               }
             });
-            console.log(this.name,"this.innerWidth",this.innerWidth)
+            console.log(this.name, "this.innerWidth", this.innerWidth);
             this.innerHeight = maxHeight;
           } else if (this.flexDir == "column") {
             let maxWidth = 0;
@@ -606,8 +677,7 @@ export default {
               });
             });
             this.innerHeight = heights.reduce((a, b) => a + b);
-          }
-           else {
+          } else {
             //这里的宽是包括mgl mgr的
             let widths = [];
             this.rows.forEach((elements, i) => {
