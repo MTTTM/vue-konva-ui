@@ -119,8 +119,8 @@ export default {
       return {
         x: 0,
         y: 0,
-        width: this.endWidth ? this.endWidth : this.defaultConfig.width,
-        height: this.endHeight ? this.endHeight : this.defaultConfig.height,
+        width: this.endWidth ? this.endWidth : this.innerWidth,
+        height: this.endHeight ? this.endHeight : this.innerHeight,
         stroke: this.strokeBackgroundColor ? this.strokeBackgroundColor : "red",
         strokeWidth: 1,
         zIndex: 0,

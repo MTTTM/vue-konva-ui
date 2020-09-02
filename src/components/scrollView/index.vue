@@ -25,6 +25,7 @@ export default {
   mixins: [customLayout],
   props: {
     orientation: {
+      type:String,
       default() {
         return "horizontal"; //horizontal  vertical
       },
@@ -76,9 +77,10 @@ export default {
         draggable: true,
         dragBoundFunc: function (pos) {
           let lineLayoutChild = me.$refs["slot"].$children[0];
-          if (this.orientation == "horizontal") {
+          console.log("this.orientation",this.orientation)
+          if (me.orientation == "horizontal") {
             let x = pos.x;
-            let wrapWidth = me.endWidth;
+            let wrapWidth = me.width;
             let innerWidth = lineLayoutChild.endWidth;
             //如果内容宽度比本组件的width小，就不允许滚动
             console.log(
@@ -120,6 +122,10 @@ export default {
               x: this.absolutePosition().x,
               y: y,
             };
+          }
+          return {
+            x:0,
+            y:0
           }
         },
       };
