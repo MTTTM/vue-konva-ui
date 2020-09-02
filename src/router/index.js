@@ -39,6 +39,10 @@ Vue.use(VueRouter)
     path: '/scrollView',
     name: 'scrollView',
     component: () => import(/* webpackChunkName: "about" */ '../views/pages/scrollView.vue')
+  }, {
+    path: '/scrollViewVercal',
+    name: 'scrollViewVercal',
+    component: () => import(/* webpackChunkName: "about" */ '../views/pages/scrollViewVercal.vue')
   },
   {
     path: '/icons',
