@@ -100,6 +100,11 @@ Vue.use(VueRouter)
     component: () => import(/* webpackChunkName: "about" */ '../views/pages/linearLayoutFlexItem.vue')
   },
   {
+    path: '/linearLayoutColFlexItem',
+    name: 'linearLayoutColFlexItem',
+    component: () => import(/* webpackChunkName: "about" */ '../views/pages/linearLayoutColFlexItem.vue')
+  },
+  {
     path: '/linearLayoutWrap',
     name: 'linearLayoutWrap',
     component: () => import(/* webpackChunkName: "about" */ '../views/pages/linearLayoutWrap.vue')

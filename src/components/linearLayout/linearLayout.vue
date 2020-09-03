@@ -248,6 +248,37 @@ export default {
       };
       return t;
     },
+    /**
+     * column布局 子元素包含flex
+     * 依据子元素的 flex 来计算份额
+     * @returns {objcet}
+     * @description
+     *  partCount flex加起来有多少份
+     *  onePart   flex:1 等于多少值
+     */
+    computedColumnFlexItemInfo(childrens) {
+      let partCount = 1; //flex item的flex相加总和
+      let flexItemArr = childrens.filter(
+        (item) => item.endFlex != "none"
+      );
+      if (flexItemArr.length > 0) {
+        partCount = flexItemArr.reduce((a, b) => a.endFlex + b.endFlex);
+      }
+      let flexNoneItemArr = childrens.filter((item) => item.endFlex == "none");
+      let flexNoneItemHeight = 0;
+
+      if(flexNoneItemArr.length){
+        flexNoneItemHeight = flexNoneItemArr.reduce(
+        (a, b) =>
+          a.endMgt + a.endMgb + a.endHeight + (b.endHeight + b.endMgb + b.endMgt)
+      );
+      }
+      let t= {
+        partCount,
+        onePart: flexNoneItemHeight>0?(this.endHeight - flexNoneItemHeight) / partCount:0,
+      };
+      return t;
+    },
     updateRowLayout() {
       this.leftDis = 0;
       this.topDis = 0;
@@ -492,6 +523,8 @@ export default {
       //获取space-between应该补充的间隙，已处理无效参数，包括非space-between
       let betweenMgt = 0;
       let mgt = this.endMgt;
+
+      let flexInfo = this.computedColumnFlexItemInfo(childrens);
       for (let i = 0; i < childrens.length; i++) {
         let vm = childrens[i];
         if (vm.defaultConfig == undefined) {
@@ -517,9 +550,18 @@ export default {
         let height = 0;
         let width = 0;
         if (preVm && preVm.defaultConfig) {
-          height = preVm.endHeight
-            ? preVm.endHeight
-            : preVm.defaultConfig.height;
+          // height = preVm.endHeight
+          //   ? preVm.endHeight
+          //   : preVm.defaultConfig.height;
+          if(preVm.endConfig&&preVm.endConfig.height){
+            height=preVm.endConfig.height;
+          }
+          else if(preVm.defaultConfig.height){
+            height=preVm.defaultConfig.height;
+          }
+          else{
+            heights=preVm.endHeight;
+          }
 
           width = preVm.endWidth ? preVm.endWidth : preVm.defaultConfig.width;
         } else {
@@ -604,6 +646,16 @@ export default {
           // x: vm.endMgl,
           x: this.leftDis,
         };
+
+        if (vm.endFlex != "none"&&flexInfo.onePart>0) {
+            let height = {
+              height: flexInfo.onePart * vm.endFlex - vm.endMgt - vm.endMgb,
+            };
+            console.log("flex height", height);
+            vm.updateConfig = Object.assign({}, vm.updateConfig, height);
+            vm.updateTextConfig = Object.assign({}, vm.updateTextConfig, height);
+        }
+
         //添加行列
         if (!this.rows[this.line]) {
           this.rows[this.line] = [];

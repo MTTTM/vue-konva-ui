@@ -5,6 +5,7 @@
       <router-link to="/linearlayout">column</router-link>
       <router-link to="/linearlayout2">row</router-link>
       <router-link to="/linearLayoutRowFlexItem">linearLayoutRow FlexItem</router-link>
+       <router-link to="/linearLayoutColFlexItem">linearLayout Col FlexItem</router-link>
       <router-link to="/multRowInCol">multRowInCol</router-link>
       <router-link to="/mulColInRow">mulColInRow</router-link>
       <router-link to="/linearlayout3">flexDir</router-link>

@@ -6,9 +6,10 @@
           name="layout2"
           :height="600"
           :width="1000"
+          flexDir="column"
         >
           <template v-for="(item,index) in arr">
-            <kButton type="info" :config="{mgt:10,mgl:10,flex:index>0&&index<3?1:'none'}" :text="item" :key="item"></kButton>
+            <kButton type="info" :config="{mgt:index>0?10:0,mgl:10,flex:index>0&&index<3?1:'none'}" :text="item" :key="item"></kButton>
           </template>
         </linear-layout>
       </v-layer>
