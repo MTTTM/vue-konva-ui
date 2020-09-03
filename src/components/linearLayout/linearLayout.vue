@@ -236,11 +236,11 @@ export default {
       let flexNoneItemArr = childrens.filter((item) => item.endFlex == "none");
       let flexNoneItemWidth = flexNoneItemArr.reduce(
         (a, b) =>
-          a.endMgr + a.endMgl + a.endWidth + (b.endWidth + b.endMgl + b.endMgr)
+          a.endMgr + a.endMgl + a.endWidth + (b.endWidth + b.endMgl + b.endMgr),0
       );
       let t= {
         partCount,
-        onePart: (this.endWidth - flexNoneItemWidth) / partCount,
+        onePart: flexNoneItemWidth>0?(this.endWidth - flexNoneItemWidth) / partCount:0,
       };
       return t;
     },
@@ -252,6 +252,13 @@ export default {
         let childrens = this.$refs["slot"].$children;
         //获取space-between应该补充的间隙，已处理无效参数，包括非space-between
         let betweenMgl = 0;
+
+        if (this.justifyContent == "space-between") {
+          betweenMgl = this.mixinSpaceBetWeenPlusMgl(childrens);
+        } else if (this.justifyContent == "space-around") {
+          betweenMgl = this.mixinSpaceAroundPlusMgl(childrens);
+        }
+
         //获取子元素flex的相关信息
         let flexInfo = this.computedFlexItemInfo(childrens);
         console.log("flexInfo", flexInfo);
@@ -416,7 +423,7 @@ export default {
             y: this.topDis,
           };
 
-          if (vm.endFlex != "none") {
+          if (vm.endFlex != "none"&&flexInfo.onePart>0) {
             let width = {
               width: flexInfo.onePart * vm.endFlex - vm.endMgl - vm.endMgr,
             };
