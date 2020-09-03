@@ -234,10 +234,14 @@ export default {
         partCount = flexItemArr.reduce((a, b) => a.endFlex + b.endFlex);
       }
       let flexNoneItemArr = childrens.filter((item) => item.endFlex == "none");
-      let flexNoneItemWidth = flexNoneItemArr.reduce(
+      let flexNoneItemWidth = 0;
+
+      if(flexNoneItemArr.length){
+        flexNoneItemWidth = flexNoneItemArr.reduce(
         (a, b) =>
-          a.endMgr + a.endMgl + a.endWidth + (b.endWidth + b.endMgl + b.endMgr),0
+          a.endMgr + a.endMgl + a.endWidth + (b.endWidth + b.endMgl + b.endMgr)
       );
+      }
       let t= {
         partCount,
         onePart: flexNoneItemWidth>0?(this.endWidth - flexNoneItemWidth) / partCount:0,
