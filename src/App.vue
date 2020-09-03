@@ -18,8 +18,10 @@
       <router-link to="/linearLayoutWrap2">row linearLayoutWrap2</router-link>
       <router-link to="/scrollView">scrollView</router-link>
        <router-link to="/scrollViewVercal"> scrollViewVercal</router-link>
-     
       <router-link to="/page">page</router-link>
+
+      <p>综合</p>
+        <router-link to="/konva">横竖屏</router-link>
     </div>
     <router-view />
   </div>
