@@ -204,6 +204,10 @@ export default {
         }
       });
     },
+    getChildren(){
+      let childrens =  this.$refs["slot"]?this.$refs["slot"].$children:null;
+      return childrens;
+    },
     mouseoverfun() {
       if (this.strokeBackgroundColor == "green") {
         this.strokeBackgroundColor = this.debugerColor
@@ -284,7 +288,10 @@ export default {
       this.topDis = 0;
       this.line = 0;
       this.$nextTick(() => {
-        let childrens = this.$refs["slot"].$children;
+        let childrens =  this.getChildren();
+        if(!childrens){
+          return;
+        }
         //获取space-between应该补充的间隙，已处理无效参数，包括非space-between
         let betweenMgl = 0;
 
@@ -500,7 +507,10 @@ export default {
     updateLinearChildWidth() {},
     //更正容器款高
     updateBoxWidthHeight() {
-      let childrens = this.$refs["slot"].$children;
+      let childrens = this.getChildren();
+      if(!childrens){
+        return;
+      }
       for (let i = 0; i < childrens.length; i++) {
         let vm = childrens[i];
         if (vm.defaultConfig == undefined) {
@@ -519,7 +529,10 @@ export default {
       this.topDis = 0;
       this.rows = [];
 
-      let childrens = this.$refs["slot"].$children;
+      let childrens = this.getChildren();
+      if(!childrens){
+        return;
+      }
       //获取space-between应该补充的间隙，已处理无效参数，包括非space-between
       let betweenMgt = 0;
       let mgt = this.endMgt;
@@ -690,7 +703,10 @@ export default {
       }
     },
     updateInnerWidthHeight() {
-      let childrens = this.$refs["slot"].$children;
+      let childrens = this.getChildren();
+      if(!childrens){
+         return;
+      }
       this.innerWidth = 0;
       this.innerHeight = 0;
       console.log("this.line 5", this.line);
@@ -739,7 +755,10 @@ export default {
                 maxHeight = mgHeight;
               });
             });
-            this.innerHeight = heights.reduce((a, b) => a + b);
+            if(heights.length){
+               this.innerHeight = heights.reduce((a, b) => a + b);
+            }
+           
           } else {
             //这里的宽是包括mgl mgr的
             let widths = [];
@@ -753,7 +772,10 @@ export default {
                 maxWidth = mgWidth;
               });
             });
-            this.innerWidth = widths.reduce((a, b) => a + b);
+            if(widths){
+               this.innerWidth = widths.reduce((a, b) => a + b);
+            }
+           
           }
         }
       }

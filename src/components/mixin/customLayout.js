@@ -51,7 +51,7 @@ export default {
 
       //  this.emitParentUpdateLayout();
     },
-    beforeDestroy() {
+    destroyed() {
         this.emitParentUpdateLayout();
     },
     computed: {
